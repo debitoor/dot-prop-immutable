@@ -1,13 +1,16 @@
 'use strict';
 
 function setProp(obj, prop, value) {
-	prop = typeof prop === 'string' ? prop.split('.') : prop;
+	prop = typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var setPropImmutableRec = function(obj, prop, value, i) {
 		var head = prop[i];
 
 		if (prop.length !== i) {
 			if (Array.isArray(obj)) {
+				if (head === '$end') {
+					head = obj.length - 1;
+				}
 				if (/^\+?\d+$/.test(head) && obj.length > head) {
 					return [...obj.slice(0, head), setPropImmutableRec(obj[head] || {}, prop, value, i + 1), ...obj.slice(head + 1)];
 				} else {
@@ -28,16 +31,24 @@ function setProp(obj, prop, value) {
 }
 
 function getProp(obj, prop) {
-	prop = typeof prop === 'string' ? prop.split('.') : prop;
+	prop = typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
 		if (typeof obj !== 'object') {
 			return undefined;
 		}
-		obj = obj[prop[i]];
+		var head = prop[i];
+		if (Array.isArray(obj) && head === '$end') {
+			head = obj.length - 1;
+		}
+		obj = obj[head];
 	}
 
 	return obj;
+}
+
+function propToArray(prop) {
+	return prop.replace(/\\\./g, '@').replace(/\./g, '*').replace(/@/g, '.').split('*');
 }
 
 module.exports = {
