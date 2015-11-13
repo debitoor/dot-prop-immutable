@@ -1,6 +1,6 @@
 # dot-prop-immutable
 
-{{description}}.
+Immutable version of dot-prop with some extensions. The immutable part is inspired by React Immutability Helpers.
 
 	npm install dot-prop-immutable
 

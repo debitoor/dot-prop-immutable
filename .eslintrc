@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "rules": {
     "camelcase": 0,
     "consistent-return": 0,
@@ -11,10 +10,7 @@
     "object-shorthand": 0,
     "one-var": 0,
     "quotes": [2, "single"],
-    "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1,
     "semi": [2, "always"],
-    "strict": [2, "never"],
     "wrap-iife": [2, "inside"],
     "new-cap": [2, {"capIsNew": false}],
     "no-alert": 0,
@@ -43,11 +39,7 @@
     "mocha": true,
     "es6": true
   },
-  "plugins": [
-    "react"
-  ],
   "ecmaFeatures": {
-    "jsx": true,
     "modules": true
   }
 }
