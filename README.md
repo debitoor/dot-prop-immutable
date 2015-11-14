@@ -60,7 +60,7 @@ var obj3 = dotProp.set({foo: {bar: 'b', baz: 'x'}}, 'foo.dot\\.dot', 'unicorn');
 
 
 // Use an array as set path
-dotProp.set({foo: {bar: 'b', baz: 'x'}}, ['foo', 'dot.dot'], 'unicorn');
+dotProp.set({foo: {bar: 'b', baz: 'x'}}, ['foo', 'dot.dot'], 'unicorn')
 //=> {foo: {bar: 'b', baz: 'x', 'dot.dot': 'unicorn'}}
 
 
@@ -70,7 +70,7 @@ dotProp.set(obj, 'foo.bar', v => v + 'bc')
 
 
 // Index into array
-dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1', 'platin-unicorn') <--- does not work
+dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1', 'platin-unicorn')
 //=> {foo: [{ bar: 'gold-unicorn'}, 'platin-unicorn', 'silver-unicorn']}
 
 dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar', 'platin-unicorn')
