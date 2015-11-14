@@ -49,7 +49,7 @@ var obj2 = dotProp.set(obj1 , 'foo.baz', 'x');
 //obj2 => {foo: {bar: 'b', baz: 'x'}}
 
 var obj3 = dotProp.set({foo: {bar: 'b', baz: 'x'}}, 'foo.dot\\.dot', 'unicorn');
-//obj3 => {foo: {bar: 'a', baz: 'x', 'dot.dot': 'unicorn'}}
+//obj3 => {foo: {bar: 'b', baz: 'x', 'dot.dot': 'unicorn'}}
 
 // where obj, obj1, obj2, obj3 all are different objects.
 

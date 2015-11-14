@@ -38,6 +38,32 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('invariant', objInvariant);
 			});
 
+			describe('when set prop empty object', () => {
+
+				before(function () {
+					result = dotProp.set({}, 'b', 3);
+				});
+
+				it('should replace prop', () => {
+					expect(result).to.eql({
+						b: 3
+					});
+				});
+			});
+
+			describe('when set prop empty path', () => {
+
+				before(function () {
+					result = dotProp.set({}, '', 3);
+				});
+
+				it('should replace prop', () => {
+					expect(result).to.eql({
+						'': 3
+					});
+				});
+			});
+
 			describe('when set prop with function', () => {
 
 				before(function () {
@@ -278,6 +304,20 @@ describe('dot-prop-immutable.spec.js', function() {
 
 				it('should get prop', () => {
 					expect(dotProp.get(obj, 'b')).to.eql({ x: 1, y: 2 });
+				});
+			});
+
+			describe('when get prop empty object', () => {
+
+				it('should get prop', () => {
+					expect(dotProp.get({}, 'b')).to.equal(undefined);
+				});
+			});
+
+			describe('when get prop empty path', () => {
+
+				it('should get prop', () => {
+					expect(dotProp.get(obj, '')).to.equal(undefined);
 				});
 			});
 

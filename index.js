@@ -12,6 +12,7 @@ function setProp(obj, prop, value) {
 					head = obj.length - 1;
 				}
 				if (/^\+?\d+$/.test(head) && obj.length > head) {
+					head = parseInt(head);
 					return [...obj.slice(0, head), setPropImmutableRec(obj[head] || {}, prop, value, i + 1), ...obj.slice(head + 1)];
 				} else {
 					let clone = [...obj];
