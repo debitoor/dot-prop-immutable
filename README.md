@@ -24,6 +24,11 @@ dotProp.get({foo: {'dot.dot': 'unicorn'}}, 'foo.dot\\.dot')
 //=> 'unicorn'
 
 
+// Use an array as get path
+dotProp.get({foo: {'dot.dot': 'unicorn'}}, ['foo', 'dot.dot'])
+//=> 'unicorn'
+
+
 // Index into array
 dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1')
 //=> 'white-unicorn'
@@ -52,6 +57,11 @@ var obj3 = dotProp.set({foo: {bar: 'b', baz: 'x'}}, 'foo.dot\\.dot', 'unicorn');
 //obj3 => {foo: {bar: 'b', baz: 'x', 'dot.dot': 'unicorn'}}
 
 // where obj, obj1, obj2, obj3 all are different objects.
+
+
+// Use an array as set path
+dotProp.set({foo: {bar: 'b', baz: 'x'}}, ['foo', 'dot.dot'], 'unicorn');
+//=> {foo: {bar: 'b', baz: 'x', 'dot.dot': 'unicorn'}}
 
 
 // Setter where value is a function (get and set current value)

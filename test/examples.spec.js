@@ -16,6 +16,10 @@ describe('examples.spec.js', function() {
 			expect(dotProp.get({foo: {'dot.dot': 'unicorn'}}, 'foo.dot\\.dot')).to.eql('unicorn');
 		});
 
+		it('use an array as get path', function() {
+			expect(dotProp.get({foo: {'dot.dot': 'unicorn'}}, ['foo', 'dot.dot'])).to.eql('unicorn');
+		});
+
 		it('index', function() {
 			expect(dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1')).to.eql('white-unicorn');
 		});
@@ -82,8 +86,16 @@ describe('examples.spec.js', function() {
 			});
 		});
 
+		it('Use an array as set path', function() {
+			expect(dotProp.set({foo: {bar: 'b', baz: 'x'}}, ['foo', 'dot.dot'], 'unicorn')).to.eql(
+				{foo: {bar: 'b', baz: 'x', 'dot.dot': 'unicorn'}}
+			);
+		});
+
 		it('Setter where value is a function', function() {
-			expect(dotProp.set(obj, 'foo.bar', v => v + 'bc')).to.eql({foo: {bar: 'abc'}});
+			expect(dotProp.set(obj, 'foo.bar', v => v + 'bc')).to.eql(
+				{foo: {bar: 'abc'}}
+			);
 		});
 
 		it('Index into array', function() {
