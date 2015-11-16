@@ -15,20 +15,22 @@ module.exports.set = function(obj, prop, value) {
 					head = parseInt(head);
 					return [].concat(obj.slice(0, head), setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1), obj.slice(head + 1));
 				} else {
-					let clone = obj.slice();
+					var clone = obj.slice();
 					clone[head] = setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1);
 					return clone;
 				}
 
 			} else {
-				return Object.assign({}, obj, {[head]: setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1)});
+				var item = {};
+				item[head] = setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1);
+				return Object.assign({}, obj, item);
 			}
 		}
 
 		return typeof value === 'function' ? value(obj) : value;
 	};
 
-	return setPropImmutableRec(obj, prop, value, 0, null);
+	return setPropImmutableRec(obj, prop, value, 0);
 };
 
 module.exports.get = function(obj, prop) {
