@@ -1,4 +1,4 @@
-# dot-prop-immutable
+# dot-prop-immutable [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable)
 
 Immutable version of dot-prop with some extensions. The immutable part is inspired by React Immutability Helpers.
 
