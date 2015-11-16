@@ -71,13 +71,13 @@ dotProp.set(obj, 'foo.bar', v => v + 'bc')
 
 // Index into array
 dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1', 'platin-unicorn')
-//=> {foo: [{ bar: 'gold-unicorn'}, 'platin-unicorn', 'silver-unicorn']}
+//=> {foo: [{bar: 'gold-unicorn'}, 'platin-unicorn', 'silver-unicorn']}
 
 dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar', 'platin-unicorn')
-//=> {foo: [{ bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']}
+//=> {foo: [{bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']}
 
-dotProp.set([{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar', 'platin-unicorn')
-//=> [{ bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']
+dotProp.set([{bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar', 'platin-unicorn')
+//=> [{bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']
 
 // Index into array with $end
 dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end', 'platin-unicorn')
