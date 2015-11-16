@@ -5,7 +5,9 @@ Immutable version of dot-prop with some extensions. The immutable part is inspir
 	npm install dot-prop-immutable
 
 In this implementation the setter does not mutate the input object but returns a new object.
-For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated patch and will reuse the rest.
+For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
+
+It is also possible to index into array where the special index $end refers to the last element of the array.
 
 
 ## Usage
