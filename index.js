@@ -13,22 +13,22 @@ module.exports.set = function(obj, prop, value) {
 				}
 				if (/^\+?\d+$/.test(head) && obj.length > head) {
 					head = parseInt(head);
-					return [].concat(obj.slice(0, head), setPropImmutableRec(obj[head] || {}, prop, value, i + 1), obj.slice(head + 1));
+					return [].concat(obj.slice(0, head), setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1), obj.slice(head + 1));
 				} else {
 					let clone = obj.slice();
-					clone[head] = setPropImmutableRec(obj[head] || {}, prop, value, i + 1);
+					clone[head] = setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1);
 					return clone;
 				}
 
 			} else {
-				return Object.assign({}, obj, {[head]: setPropImmutableRec(obj[head] || {}, prop, value, i + 1)});
+				return Object.assign({}, obj, {[head]: setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1)});
 			}
 		}
 
 		return typeof value === 'function' ? value(obj) : value;
 	};
 
-	return setPropImmutableRec(obj, prop, value, 0);
+	return setPropImmutableRec(obj, prop, value, 0, null);
 };
 
 module.exports.get = function(obj, prop) {

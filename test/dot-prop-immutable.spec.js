@@ -12,7 +12,7 @@ describe('dot-prop-immutable.spec.js', function() {
 		'b.x': 10
 	};
 
-	var arr = [1, { b: 2}];
+	var arr = [1, { a: false}];
 
 	var result;
 
@@ -271,7 +271,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 				it('should replace prop', () => {
 					expect(result).to.eql(
-						[3, {b: 2}]
+						[3, {a: false}]
 					);
 				});
 
@@ -281,18 +281,17 @@ describe('dot-prop-immutable.spec.js', function() {
 			describe('when set array[index] deep prop', () => {
 
 				before(function () {
-					result = dotProp.set(arr, '1.b', 3);
+					result = dotProp.set(arr, '1.a', v => !v);
 				});
 
 				it('should replace prop', () => {
 					expect(result).to.eql(
-						[1, {b: 3}]
+						[1, {a: true}]
 					);
 				});
 
 				it('invariant', arrInvariant);
 			});
-
 		});
 	});
 
@@ -390,7 +389,7 @@ describe('dot-prop-immutable.spec.js', function() {
 			describe('when get array[index] deep prop', () => {
 
 				it('should replace prop', () => {
-					expect(dotProp.get(arr, '1.b')).to.equal(2);
+					expect(dotProp.get(arr, '1.a')).to.equal(false);
 				});
 			});
 
@@ -411,7 +410,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 	function arrInvariant() {
 		expect(arr).to.eql(
-			[1, {b: 2}]
+			[1, {a: false}]
 		);
 	}
 });
