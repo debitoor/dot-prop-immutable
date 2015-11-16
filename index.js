@@ -1,6 +1,6 @@
 'use strict';
 
-function setProp(obj, prop, value) {
+module.exports.set = function(obj, prop, value) {
 	prop = typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var setPropImmutableRec = function(obj, prop, value, i) {
@@ -13,9 +13,9 @@ function setProp(obj, prop, value) {
 				}
 				if (/^\+?\d+$/.test(head) && obj.length > head) {
 					head = parseInt(head);
-					return [...obj.slice(0, head), setPropImmutableRec(obj[head] || {}, prop, value, i + 1), ...obj.slice(head + 1)];
+					return [].concat(obj.slice(0, head), setPropImmutableRec(obj[head] || {}, prop, value, i + 1), obj.slice(head + 1));
 				} else {
-					let clone = [...obj];
+					let clone = obj.slice();
 					clone[head] = setPropImmutableRec(obj[head] || {}, prop, value, i + 1);
 					return clone;
 				}
@@ -29,9 +29,9 @@ function setProp(obj, prop, value) {
 	};
 
 	return setPropImmutableRec(obj, prop, value, 0);
-}
+};
 
-function getProp(obj, prop) {
+module.exports.get = function(obj, prop) {
 	prop = typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
@@ -46,13 +46,8 @@ function getProp(obj, prop) {
 	}
 
 	return obj;
-}
+};
 
 function propToArray(prop) {
 	return prop.replace(/\\\./g, '@').replace(/\./g, '*').replace(/@/g, '.').split('*');
 }
-
-module.exports = {
-	set: setProp,
-	get: getProp
-};

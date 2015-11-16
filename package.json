@@ -8,7 +8,7 @@
     "npm": "3.3.6"
   },
   "scripts": {
-    "test": "mocha --harmony"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,9 @@
   },
   "keywords": [
     "immutable",
+    "dot-prop",
+    "react",
+    "redux",
     "obj",
     "object",
     "prop",
@@ -28,8 +31,7 @@
     "path",
     "get",
     "access",
-    "notation",
-    "dot-prop"
+    "notation"
   ],
   "homepage": "https://github.com/debitoor/dot-prop-immutable",
   "devDependencies": {
