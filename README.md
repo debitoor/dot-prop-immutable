@@ -89,7 +89,7 @@ dotProp.set({foo: {bar: 'a'}}, 'foo.bar', v => v + 'bc')
 ```
 
 
-Modidify a nested array
+Modify a nested array
 
 ```javascript
 // Index into array
