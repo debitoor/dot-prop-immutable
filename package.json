@@ -1,6 +1,6 @@
 {
   "name": "dot-prop-immutable",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Immutable version of dot-prop with some extensions",
   "main": "index.js",
   "scripts": {
