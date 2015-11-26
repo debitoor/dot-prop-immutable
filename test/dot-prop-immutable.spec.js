@@ -237,24 +237,19 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('invariant', objInvariant);
 			});
 
-			describe('when set prop on array', () => {
+			describe('when set array[index] and index not integer', () => {
+				var error;
 
 				before(function () {
-					result = dotProp.set(obj, 'c.w', 3);
+					try {
+						dotProp.set(obj, 'c.w', 3);
+					} catch (err) {
+						error = err;
+					}
 				});
 
-				it('should replace prop', () => {
-					var c = [1, 2];
-					c.w = 3;
-					expect(result).to.eql({
-						a: 1,
-						b: {
-							x: 1,
-							y: 2
-						},
-						c: c,
-						'b.x': 10
-					});
+				it('should throw an error', () => {
+					expect(error.message).to.eql('Array index \'w\' has to be an integer');
 				});
 
 				it('invariant', objInvariant);
@@ -393,6 +388,246 @@ describe('dot-prop-immutable.spec.js', function() {
 				});
 			});
 
+		});
+	});
+
+	describe('when delete', function() {
+
+		describe('when have an object', () => {
+
+			describe('when delete prop', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'b');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						c: [1, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete prop empty object', () => {
+
+				before(function () {
+					result = dotProp.delete({}, 'b');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({});
+				});
+			});
+
+			describe('when delete prop empty path', () => {
+
+				before(function () {
+					result = dotProp.delete({}, '');
+				});
+
+				it('should delete prop', () => {});
+			});
+
+			describe('when delete deep prop', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'b.x');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							y: 2
+						},
+						c: [1, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete deep prop not defined', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'b.z.w');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [1, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[index]', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'c.0');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[index] with function', () => {
+
+				before(function () {
+					result = dotProp.set(obj, 'c.0', v => v * 3);
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [3, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[index] prop not defined', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'c.1.z.w');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [1, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[index] out of index', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'c.3');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [1, 2],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[$end]', () => {
+
+				before(function () {
+					result = dotProp.delete(obj, 'c.$end');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({
+						a: 1,
+						b: {
+							x: 1,
+							y: 2
+						},
+						c: [1],
+						'b.x': 10
+					});
+				});
+
+				it('invariant', objInvariant);
+			});
+
+			describe('when delete array[index] and index not integer', () => {
+				var error;
+
+				before(function () {
+					try {
+						dotProp.delete(obj, 'c.w');
+					} catch (err) {
+						error = err;
+					}
+				});
+
+				it('should throw an error', () => {
+					expect(error.message).to.eql('Array index \'w\' has to be an integer');
+				});
+
+				it('invariant', objInvariant);
+			});
+		});
+
+		describe('when have an array', () => {
+
+			describe('when delete array[index]', () => {
+
+				before(function () {
+					result = dotProp.delete(arr, '0');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql(
+						[{a: false}]
+					);
+				});
+
+				it('invariant', arrInvariant);
+			});
+
+			describe('when delete array[index] deep prop', () => {
+
+				before(function () {
+					result = dotProp.delete(arr, '1.a');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql(
+						[1, {}]
+					);
+				});
+
+				it('invariant', arrInvariant);
+			});
 		});
 	});
 
