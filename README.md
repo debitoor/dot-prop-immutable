@@ -52,19 +52,23 @@ dotProp.get({foo: {'dot.dot': 'unicorn'}}, ['foo', 'dot.dot'])
 It is also possible to index into array where the special index `$end` refers to the last element of the array.
 
 ```javascript
+var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+
 // Index into array
-dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1')
+dotProp.get(obj, 'foo.1')
 //=> 'white-unicorn'
 
-dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar')
-//=> 'gold-unicorn'
-
-dotProp.get([{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar')
+dotProp.get(obj, 'foo.0.bar')
 //=> 'gold-unicorn'
 
 // Index into array with $end
-dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end')
+dotProp.get(obj, 'foo.$end')
 //=> 'silver-unicorn'
+
+// If obj is an array
+dotProp.get([{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar')
+//=> 'gold-unicorn'
+
 ```
 
 
@@ -99,18 +103,17 @@ dotProp.set({foo: {bar: 'a'}}, 'foo.bar', v => v + 'bc')
 Modify a nested array
 
 ```javascript
+var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+
 // Index into array
-dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1', 'platin-unicorn')
+dotProp.set(obj, 'foo.1', 'platin-unicorn')
 //=> {foo: [{bar: 'gold-unicorn'}, 'platin-unicorn', 'silver-unicorn']}
 
-dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar', 'platin-unicorn')
+dotProp.set(obj, 'foo.0.bar', 'platin-unicorn')
 //=> {foo: [{bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']}
 
-dotProp.set([{bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar', 'platin-unicorn')
-//=> [{bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']
-
 // Index into array with $end
-dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end', 'platin-unicorn')
+dotProp.set(obj, 'foo.$end', 'platin-unicorn')
 //=> {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'platin-unicorn']}
 
 ```
@@ -121,11 +124,13 @@ dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 
 Delete a nested property/array by a dot path
 
 ```javascript
+var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+
 // delete
-dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end');
+dotProp.delete(obj, 'foo.$end');
 //=> {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn']}
 
-dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar');
+dotProp.delete(obj, 'foo.0.bar');
 //=> {foo: [{}, 'white-unicorn', 'silver-unicorn']}
 ```
 
