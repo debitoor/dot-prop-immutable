@@ -111,6 +111,18 @@ dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 
 
 ```
 
+
+Delete a nested property and array by a dot path
+
+```javascript
+// delete
+dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end');
+//=> {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn']}
+
+dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar');
+//=> {foo: [{}, 'white-unicorn', 'silver-unicorn']}
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
