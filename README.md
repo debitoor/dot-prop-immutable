@@ -1,11 +1,20 @@
 # dot-prop-immutable [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable)
 
-Immutable version of dot-prop with some extensions. The immutable part is inspired by React Immutability Helpers.
+Immutable version of dot-prop with some extensions.
 
 	npm install dot-prop-immutable
 
-In this implementation the setter does not mutate the input object but returns a new object.
-For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
+The motivation for this module is to have a simple utility for changing state in a React-Redux application without mutate existing sate of plain JavaScript objects.
+If you are going for real immutable data collections take a look at the cool library [Immutable.js](https://github.com/facebook/immutable-js).
+A good practise is not to mix the immutable data collections with mutable objects because it can lead to confusion. Immutable objects are not accessed by the default semantics.
+
+The library implements 3 helper function:
+
+...set: object x path x value --> object
+...get: object x path --> value
+...delete: object x path --> object
+
+None of the function mutate  the input object. For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
 
 
 ## Usage
