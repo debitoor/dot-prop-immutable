@@ -110,7 +110,7 @@ describe('examples.spec.js', function() {
 			);
 		});
 
-		it('array', function() {
+		it('Array', function() {
 			expect(dotProp.set([{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn'], '0.bar', 'platin-unicorn')).to.eql(
 				[{ bar: 'platin-unicorn'}, 'white-unicorn', 'silver-unicorn']
 			);
@@ -119,6 +119,21 @@ describe('examples.spec.js', function() {
 		it('Index into array', function() {
 			expect(dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end', 'platin-unicorn')).to.eql(
 				{foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'platin-unicorn']}
+			);
+		});
+	});
+
+	describe('when delete', function() {
+
+		it('Array element', function() {
+			expect(dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end')).to.eql(
+				{foo: [{ bar: 'gold-unicorn'}, 'white-unicorn']}
+			);
+		});
+
+		it('Deep prop', function() {
+			expect(dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.0.bar')).to.eql(
+				{foo: [{}, 'white-unicorn', 'silver-unicorn']}
 			);
 		});
 	});
