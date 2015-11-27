@@ -11,8 +11,8 @@ A good practise is not to mix the immutable data collections with mutable object
 The library implements 3 helper function:
 
 ```
-set(object, path, value) --> object
 get(object, path) --> value
+set(object, path, value) --> object
 delete(object, path) --> object
 ```
 
@@ -20,6 +20,8 @@ None of the function mutate  the input object. For efficiency the returned objec
 
 
 ## Usage
+
+### get
 
 Access a nested property by a dot path
 
@@ -65,6 +67,8 @@ dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 
 //=> 'silver-unicorn'
 ```
 
+
+### set
 
 Modify a nested property by a dot path
 
@@ -112,7 +116,9 @@ dotProp.set({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 
 ```
 
 
-Delete a nested property and array by a dot path
+### delete
+
+Delete a nested property/array by a dot path
 
 ```javascript
 // delete
