@@ -21,13 +21,40 @@ None of the function mutate  the input object. For efficiency the returned objec
 
 ## Usage
 
+```javascript
+var dotProp = require('dot-prop-immutable');
+var state = { todos: [] }, index = 0;
+
+// Add todo:
+state = dotProp.set(state, 'todos', list => [...list, {text: 'cleanup', complete: false}])
+// or with destructuring assignment
+state = {...state, todos: [...state.todos, {text: 'cleanup', complete: false}]};
+//=>  { todos: [{text: 'cleanup', complete: false}] }
+
+// Complete todo:
+state = dotProp.set(state, `todos.${index}.complete`, true)
+// or with destructuring assignment
+state = {...state, todos: [
+	...state.todos.slice(0, index),
+	{...state.todos[index], complete: true},
+	...state.todos.slice(index + 1)
+]};
+//=>  { todos: [{text: 'cleanup', complete: true}] }
+
+// Delete todo:
+state = dotProp.delete(state, `todos.${index}`)
+// or with destructuring assignment
+state = {...state, todos: [
+	...state.todos.slice(0, index),
+	...state.todos.slice(index + 1)
+]};
+//=>  { todos: [] }
+```
 ### get
 
 Access a nested property by a dot path
 
 ```javascript
-var dotProp = require('dot-prop-immutable');
-
 // Getter
 dotProp.get({foo: {bar: 'unicorn'}}, 'foo.bar')
 //=> 'unicorn'
