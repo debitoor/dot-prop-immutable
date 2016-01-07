@@ -84,7 +84,7 @@ function getArrayIndex(head, obj) {
 		head = obj.length - 1;
 	}
 	if (!/^\+?\d+$/.test(head)) {
-		throw new Error(`Array index '${head}' has to be an integer`);
+		throw new Error('Array index \'' + head + '\' has to be an integer');
 	}
 	return parseInt(head);
 }
