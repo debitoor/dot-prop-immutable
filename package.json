@@ -1,6 +1,6 @@
 {
   "name": "dot-prop-immutable",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Immutable version of dot-prop with some extensions",
   "main": "index.js",
   "scripts": {
@@ -34,9 +34,9 @@
   "devDependencies": {
     "chai": "^2.2.0",
     "eslint-plugin-react": "^3.5.1",
+    "jscs": "2.2.1",
     "mocha": "^2.1.1",
     "mocha-eslint": "^0.1.7",
-    "mocha-jscs": "^3.0.0",
-    "jscs": "2.2.1"
+    "mocha-jscs": "^3.0.0"
   }
 }

@@ -1,4 +1,4 @@
-# dot-prop-immutable [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable)
+# dot-prop-immutable [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable) [![npm version](https://badge.fury.io/js/dot-prop-immutable.svg)](https://badge.fury.io/js/dot-prop-immutable)
 
 Immutable version of dot-prop with some extensions.
 
