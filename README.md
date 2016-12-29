@@ -16,7 +16,7 @@ set(object, path, value) --> object
 delete(object, path) --> object
 ```
 
-None of the function mutate  the input object. For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
+None of the functions mutate the input object. For efficiency the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
 
 
 ## Usage

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.set = function(obj, prop, value) {
-	prop = typeof prop === 'string' ? propToArray(prop) : prop;
+	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var setPropImmutableRec = function(obj, prop, value, i) {
 		var clone, head = prop[i];
@@ -24,7 +24,7 @@ module.exports.set = function(obj, prop, value) {
 };
 
 module.exports.get = function(obj, prop) {
-	prop = typeof prop === 'string' ? propToArray(prop) : prop;
+	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
 		if (typeof obj !== 'object') {
@@ -41,7 +41,7 @@ module.exports.get = function(obj, prop) {
 };
 
 module.exports.delete = function(obj, prop) {
-	prop = typeof prop === 'string' ? propToArray(prop) : prop;
+	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var deletePropImmutableRec = function(obj, prop, i) {
 		var clone, head = prop[i];
