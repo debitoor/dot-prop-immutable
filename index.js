@@ -79,6 +79,46 @@ module.exports.delete = function(obj, prop) {
 	return deletePropImmutableRec(obj, prop, 0);
 };
 
+/**
+ * Toggles a value.  The target value is evaluated using Boolean(currentValue).  The result will always be a JSON boolean.
+ * Be careful with strings as target value, as "true" and "false" will toggle to false, but "0" will toggle to true.
+ * Here is what Javascript considers false:  0, -0, null, false, NaN, undefined, and the empty string ("")
+ * @param obj The object to evaluate.
+ * @param prop The path to the value.
+ */
+module.exports.toggle = function(obj, prop) {
+	var curVal = this.get(obj, prop);
+	return this.set(obj, prop, !Boolean(curVal));
+};
+
+/**
+ * Merges a value.  The target value must be an object, array, null, or undefined.
+ * If target is an object, Object.assign({}, target, param) is used.
+ * If target an array, target.concat(param) is used.
+ * If target is null or undefined, the value is simply set.
+ * @param obj The object to evaluate.
+ * @param prop The path to the value.
+ */
+module.exports.merge = function(obj, prop, val) {
+	var curVal = this.get(obj, prop);
+	if (typeof curVal === 'object') {
+		if (Array.isArray(curVal)){
+			return this.set(obj, prop, curVal.concat(val));
+		} else if (curVal === null){
+			return this.set(obj, prop, val);
+		}
+		else {
+			var merged = Object.assign({}, curVal, val);
+			return this.set(obj, prop, merged);
+		}
+	} else if (typeof curVal === 'undefined'){
+		return this.set(obj, prop, val);
+	}
+	else {
+		return obj;
+	}
+};
+
 function getArrayIndex(head, obj) {
 	if (head === '$end') {
 		head = obj.length - 1;
