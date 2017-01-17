@@ -163,7 +163,7 @@ dotProp.delete(obj, 'foo.0.bar');
 
 ### toggle
 
-Delete a value by a dot path.
+Toggle a boolean a value by a dot path.
 
 ```javascript
 var obj = {foo: { bar: true } };

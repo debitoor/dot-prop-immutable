@@ -1,5 +1,11 @@
 'use strict';
 
+/**
+ * Set a value by a dot path.
+ * @param obj The object to evaluate.
+ * @param prop The path to be set.
+ * @param val The value to set.
+ */
 module.exports.set = function(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
@@ -23,6 +29,11 @@ module.exports.set = function(obj, prop, value) {
 	return setPropImmutableRec(obj, prop, value, 0);
 };
 
+/**
+ * Get a value by a dot path.
+ * @param obj The object to evaluate.
+ * @param prop The path to value that should be returned.
+ */
 module.exports.get = function(obj, prop) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
@@ -40,6 +51,14 @@ module.exports.get = function(obj, prop) {
 	return obj;
 };
 
+/**
+ * Delete a property by a dot path.
+ * If target container is an object, the property is deleted.
+ * If target container is an array, the index is deleted.
+ * If target container is undefined, nothing is deleted.
+ * @param obj The object to evaluate.
+ * @param prop The path to the property or index that should be deleted.
+ */
 module.exports.delete = function(obj, prop) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
@@ -98,6 +117,7 @@ module.exports.toggle = function(obj, prop) {
  * If target is null or undefined, the value is simply set.
  * @param obj The object to evaluate.
  * @param prop The path to the value.
+ * @param val The value to merge into the target value.
  */
 module.exports.merge = function(obj, prop, val) {
 	var curVal = this.get(obj, prop);

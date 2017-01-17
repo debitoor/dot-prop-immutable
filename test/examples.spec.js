@@ -125,10 +125,30 @@ describe('examples.spec.js', function() {
 
 	describe('when delete', function() {
 
-		it('Array element', function() {
+		it('Array element by index', function() {
+			expect(dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.1')).to.eql(
+				{foo: [{ bar: 'gold-unicorn'}, 'silver-unicorn']}
+			);
+		});
+
+		it('Array element by $end', function() {
 			expect(dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end')).to.eql(
 				{foo: [{ bar: 'gold-unicorn'}, 'white-unicorn']}
 			);
+		});
+
+		it('Out of array', function() {
+			expect(dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.10')).to.eql(
+				{foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}
+			);
+		});
+
+		it('Array indexed by a property', function() {
+			try {
+				dotProp.delete({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.bar');
+			} catch (err) {
+				expect(err).to.eql(new Error('Array index \'bar\' has to be an integer'));
+			}
 		});
 
 		it('Deep prop', function() {
