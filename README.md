@@ -161,6 +161,39 @@ dotProp.delete(obj, 'foo.0.bar');
 //=> {foo: [{}, 'white-unicorn', 'silver-unicorn']}
 ```
 
+### toggle
+
+Delete a value by a dot path.
+
+```javascript
+var obj = {foo: { bar: true } };
+
+// toggle
+dotProp.toggle(obj, 'foo.bar');
+//=> {foo: { bar: false } }
+```
+### merge
+
+Merge a value by a dot path.
+> The target value must be an object, array, null, or undefined.
+
+ * If target is an object, Object.assign({}, target, param) is used.
+ * If target an array, target.concat(param) is used.
+ * If target is null or undefined, the value is simply set.
+
+```javascript
+var obj = {foo: { bar: {a:1, b:2 } };
+
+// merge object
+dotProp.merge(obj, 'foo.bar', {c:3} );
+//=> {foo: { bar:{ a:1, b:2, c:3} } }
+
+var arr = {foo: { bar: [1, 2] } };
+
+// merge array
+dotProp.merge(arr, 'foo.bar', [3, 4] );
+//=> {foo: { bar:[1, 2, 3, 4 ] }
+```
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
