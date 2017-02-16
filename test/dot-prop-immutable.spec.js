@@ -334,6 +334,10 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should return undefined', () => {
 					expect(dotProp.get(obj, 'b.z.w')).to.equal(undefined);
 				});
+
+				it('should return the default value', () => {
+					expect(dotProp.get(obj, 'b.z.w', 'something')).to.equal('something');
+				});
 			});
 
 			describe('when get array[index]', () => {
