@@ -154,9 +154,9 @@ function propToArray(prop) {
 }
 
 module.exports = {
-  set: set,
-  get: get,
-  delete: _delete,
-  toggle: toggle,
-  merge: merge,
+	set: set,
+	get: get,
+	delete: _delete,
+	toggle: toggle,
+	merge: merge
 };
