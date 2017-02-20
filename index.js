@@ -6,7 +6,7 @@
  * @param prop The path to be set.
  * @param val The value to set.
  */
-module.exports.set = function(obj, prop, value) {
+function set(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var setPropImmutableRec = function(obj, prop, value, i) {
@@ -27,14 +27,14 @@ module.exports.set = function(obj, prop, value) {
 	};
 
 	return setPropImmutableRec(obj, prop, value, 0);
-};
+}
 
 /**
  * Get a value by a dot path.
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
  */
-module.exports.get = function(obj, prop) {
+function get(obj, prop) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
@@ -49,7 +49,7 @@ module.exports.get = function(obj, prop) {
 	}
 
 	return obj;
-};
+}
 
 /**
  * Delete a property by a dot path.
@@ -59,7 +59,7 @@ module.exports.get = function(obj, prop) {
  * @param obj The object to evaluate.
  * @param prop The path to the property or index that should be deleted.
  */
-module.exports.delete = function(obj, prop) {
+function _delete(obj, prop) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	var deletePropImmutableRec = function(obj, prop, i) {
@@ -96,7 +96,7 @@ module.exports.delete = function(obj, prop) {
 	};
 
 	return deletePropImmutableRec(obj, prop, 0);
-};
+}
 
 /**
  * Toggles a value.  The target value is evaluated using Boolean(currentValue).  The result will always be a JSON boolean.
@@ -105,10 +105,10 @@ module.exports.delete = function(obj, prop) {
  * @param obj The object to evaluate.
  * @param prop The path to the value.
  */
-module.exports.toggle = function(obj, prop) {
-	var curVal = this.get(obj, prop);
-	return this.set(obj, prop, !Boolean(curVal));
-};
+function toggle(obj, prop) {
+	var curVal = get(obj, prop);
+	return set(obj, prop, !Boolean(curVal));
+}
 
 /**
  * Merges a value.  The target value must be an object, array, null, or undefined.
@@ -119,25 +119,25 @@ module.exports.toggle = function(obj, prop) {
  * @param prop The path to the value.
  * @param val The value to merge into the target value.
  */
-module.exports.merge = function(obj, prop, val) {
-	var curVal = this.get(obj, prop);
+function merge(obj, prop, val) {
+	var curVal = get(obj, prop);
 	if (typeof curVal === 'object') {
 		if (Array.isArray(curVal)){
-			return this.set(obj, prop, curVal.concat(val));
+			return set(obj, prop, curVal.concat(val));
 		} else if (curVal === null){
-			return this.set(obj, prop, val);
+			return set(obj, prop, val);
 		}
 		else {
 			var merged = Object.assign({}, curVal, val);
-			return this.set(obj, prop, merged);
+			return set(obj, prop, merged);
 		}
 	} else if (typeof curVal === 'undefined'){
-		return this.set(obj, prop, val);
+		return set(obj, prop, val);
 	}
 	else {
 		return obj;
 	}
-};
+}
 
 function getArrayIndex(head, obj) {
 	if (head === '$end') {
@@ -152,3 +152,11 @@ function getArrayIndex(head, obj) {
 function propToArray(prop) {
 	return prop.replace(/\\\./g, '@').replace(/\./g, '*').replace(/@/g, '.').split('*');
 }
+
+module.exports = {
+  set: set,
+  get: get,
+  delete: _delete,
+  toggle: toggle,
+  merge: merge,
+};
