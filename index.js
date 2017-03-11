@@ -113,17 +113,29 @@ module.exports.toggle = function(obj, prop) {
 /**
  * Merges a value.  The target value must be an object, array, null, or undefined.
  * If target is an object, Object.assign({}, target, param) is used.
- * If target an array, target.concat(param) is used.
+ * If target an array, target.concat(param) is used, unless an index is given in the opts param.
  * If target is null or undefined, the value is simply set.
  * @param obj The object to evaluate.
  * @param prop The path to the value.
  * @param val The value to merge into the target value.
+ * @param opts Options for the merge:  
+ * <li> index: if merging into an array,
+ * insert at the specified index (if it is a valid index) instead of appending.
  */
-module.exports.merge = function(obj, prop, val) {
+module.exports.merge = function(obj, prop, val, opts={}) {
 	var curVal = this.get(obj, prop);
 	if (typeof curVal === 'object') {
 		if (Array.isArray(curVal)){
-			return this.set(obj, prop, curVal.concat(val));
+			if (typeof opts.index === 'number') {
+				if (opts.index >= 0 && opts.index <= curVal.length) {
+					const newList = curVal.slice(0, opts.index).concat(val).concat(curVal.slice(opts.index));
+					return this.set(obj, prop, newList);
+				} else{
+					return obj;
+				}
+			} else {
+				return this.set(obj, prop, curVal.concat(val));
+			}
 		} else if (curVal === null){
 			return this.set(obj, prop, val);
 		}
