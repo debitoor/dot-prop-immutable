@@ -141,7 +141,7 @@ module.exports.merge = function(obj, prop, val) {
 
 function getArrayIndex(head, obj) {
 	if (head === '$end') {
-		head = obj.length - 1;
+		head = Math.max(obj.length - 1, 0);
 	}
 	if (!/^\+?\d+$/.test(head)) {
 		throw new Error('Array index \'' + head + '\' has to be an integer');
@@ -150,5 +150,14 @@ function getArrayIndex(head, obj) {
 }
 
 function propToArray(prop) {
-	return prop.replace(/\\\./g, '@').replace(/\./g, '*').replace(/@/g, '.').split('*');
+	return prop.split('.').reduce(function (ret, el, index, list) {
+		var last = index > 0 && list[index - 1];
+		if (last && /(?:^|[^\\])\\$/.test(last)) {
+			ret.pop();
+			ret.push(last.slice(0, -1) + '.' + el);
+		} else {
+			ret.push(el);
+		}
+		return ret;
+	}, []);
 }
