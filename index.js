@@ -66,8 +66,7 @@ module.exports.delete = function(obj, prop) {
 		var clone, head = prop[i];
 
 		if (typeof obj !== 'object' ||
-			!Array.isArray(obj) && obj[head] === undefined ||
-			Array.isArray(obj) && obj[getArrayIndex(head, obj)] === undefined) {
+			!Array.isArray(obj) && obj[head] === undefined) {
 
 			return obj;
 		}
