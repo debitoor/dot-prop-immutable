@@ -181,7 +181,7 @@ Merge a value by a dot path.
 > The target value must be an object, array, null, or undefined.
 
  * If target is an object, Object.assign({}, target, param) is used.
- * If target an array, target.concat(param) is used.
+ * If target an array, target.concat(param) is used, unless an index is given in the opts param.
  * If target is null or undefined, the value is simply set.
 
 ```javascript
@@ -196,6 +196,10 @@ var arr = {foo: { bar: [1, 2] } };
 // merge array
 dotProp.merge(arr, 'foo.bar', [3, 4] );
 //=> {foo: { bar:[1, 2, 3, 4 ] }
+
+// merge array at index
+dotProp.merge(arr, 'foo.bar', [1.5, 1.6], {index: 1} );
+//=> {foo: { bar:[1, 1.5, 1.6, 2, 3, 4 ] }
 ```
 ## License
 

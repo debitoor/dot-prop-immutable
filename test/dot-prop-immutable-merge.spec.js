@@ -65,6 +65,76 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 
 		});
 
+
+		describe('merge an array value into array with index', () => {
+
+			before(function () {
+				result = dotProp.merge(obj, 'c', [3, 4], {index: 1});
+			});
+
+			it('should merge prop', () => {
+				expect(result).to.eql({
+					a: 1,
+					b: {
+						x: 1,
+						y: 2
+					},
+					c: [1, 3, 4, 2],
+					d: null,
+					'b.x': 10
+				});
+			});
+
+			it('invariant', objInvariant);
+
+		});
+
+		describe('merge an array value into array with index at end', () => {
+
+			before(function () {
+				result = dotProp.merge(obj, 'c', [3, 4], {index: 2});
+			});
+
+			it('should merge prop', () => {
+				expect(result).to.eql({
+					a: 1,
+					b: {
+						x: 1,
+						y: 2
+					},
+					c: [1, 2, 3, 4],
+					d: null,
+					'b.x': 10
+				});
+			});
+
+			it('invariant', objInvariant);
+
+		});
+
+		describe('merge an array value into array with index out of bounds', () => {
+
+			before(function () {
+				result = dotProp.merge(obj, 'c', [3, 4], {index: 3});
+			});
+
+			it('should merge prop', () => {
+				expect(result).to.eql({
+					a: 1,
+					b: {
+						x: 1,
+						y: 2
+					},
+					c: [1, 2],
+					d: null,
+					'b.x': 10
+				});
+			});
+
+			it('invariant', objInvariant);
+
+		});
+
 		describe('merge an object value into null', () => {
 
 			before(function () {
