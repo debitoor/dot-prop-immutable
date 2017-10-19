@@ -34,12 +34,12 @@ function set(obj, prop, value) {
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
  */
-function get(obj, prop) {
+function get(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
 		if (typeof obj !== 'object') {
-			return undefined;
+			return value;
 		}
 		var head = prop[i];
 		if (Array.isArray(obj) && head === '$end') {
@@ -66,8 +66,7 @@ function _delete(obj, prop) {
 		var clone, head = prop[i];
 
 		if (typeof obj !== 'object' ||
-			!Array.isArray(obj) && obj[head] === undefined ||
-			Array.isArray(obj) && obj[getArrayIndex(head, obj)] === undefined) {
+			!Array.isArray(obj) && obj[head] === undefined) {
 
 			return obj;
 		}
@@ -141,7 +140,7 @@ function merge(obj, prop, val) {
 
 function getArrayIndex(head, obj) {
 	if (head === '$end') {
-		head = obj.length - 1;
+		head = Math.max(obj.length - 1, 0);
 	}
 	if (!/^\+?\d+$/.test(head)) {
 		throw new Error('Array index \'' + head + '\' has to be an integer');
@@ -150,7 +149,16 @@ function getArrayIndex(head, obj) {
 }
 
 function propToArray(prop) {
-	return prop.replace(/\\\./g, '@').replace(/\./g, '*').replace(/@/g, '.').split('*');
+	return prop.split('.').reduce(function (ret, el, index, list) {
+		var last = index > 0 && list[index - 1];
+		if (last && /(?:^|[^\\])\\$/.test(last)) {
+			ret.pop();
+			ret.push(last.slice(0, -1) + '.' + el);
+		} else {
+			ret.push(el);
+		}
+		return ret;
+	}, []);
 }
 
 module.exports = {

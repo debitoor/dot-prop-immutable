@@ -14,6 +14,8 @@ describe('dot-prop-immutable.spec.js', function() {
 
 	var arr = [1, { a: false}];
 
+	var arrWithUndefined = [1, undefined, 4];
+
 	var result;
 
 	describe('when set', function() {
@@ -334,6 +336,10 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should return undefined', () => {
 					expect(dotProp.get(obj, 'b.z.w')).to.equal(undefined);
 				});
+
+				it('should return the default value', () => {
+					expect(dotProp.get(obj, 'b.z.w', 'something')).to.equal('something');
+				});
 			});
 
 			describe('when get array[index]', () => {
@@ -627,6 +633,19 @@ describe('dot-prop-immutable.spec.js', function() {
 				});
 
 				it('invariant', arrInvariant);
+			});
+
+			describe('when delete array[index] which element is undefined', () => {
+
+				before(function () {
+					result = dotProp.delete(arrWithUndefined, '1');
+				});
+
+				it('should delete the element', () => {
+					expect(result).to.eql(
+            [1, 4]
+          );
+				});
 			});
 		});
 	});
