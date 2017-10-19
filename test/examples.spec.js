@@ -34,6 +34,8 @@ describe('examples.spec.js', function() {
 
 		it('index $end', function() {
 			expect(dotProp.get({foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']}, 'foo.$end')).to.eql('silver-unicorn');
+			expect(dotProp.get({foo: []}, 'foo.$end')).to.eql(undefined);
+			expect(dotProp.set({foo: []}, 'foo.$end', 'bar')).to.eql({foo: ['bar']});
 		});
 	});
 
