@@ -4,6 +4,8 @@
   "description": "Immutable version of dot-prop with some extensions",
   "main": "index.js",
   "scripts": {
+    "postversion": "git push && git push --tags",
+    "preversion": "npm test",
     "test": "mocha"
   },
   "repository": {
