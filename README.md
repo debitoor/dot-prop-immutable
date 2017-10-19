@@ -62,6 +62,9 @@ dotProp.get({foo: {bar: 'unicorn'}}, 'foo.bar')
 dotProp.get({foo: {bar: 'a'}}, 'foo.notDefined.deep')
 //=> undefined
 
+dotProp.get({foo: {bar: 'a'}}, 'foo.notDefined.deep', 'default value')
+//=> default value
+
 dotProp.get({foo: {'dot.dot': 'unicorn'}}, 'foo.dot\\.dot')
 //=> 'unicorn'
 ```

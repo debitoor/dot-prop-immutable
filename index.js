@@ -34,12 +34,12 @@ module.exports.set = function(obj, prop, value) {
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
  */
-module.exports.get = function(obj, prop) {
+module.exports.get = function(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
 		if (typeof obj !== 'object') {
-			return undefined;
+			return value;
 		}
 		var head = prop[i];
 		if (Array.isArray(obj) && head === '$end') {
