@@ -148,6 +148,18 @@ dotProp.set(obj, 'foo.$end', 'platin-unicorn')
 
 ```
 
+### setAll
+
+Set multiple nested values by passing a map of path: value
+
+```javascript
+// Setter
+var obj = {foo: {bar: 'a'}};
+
+// var obj2 = dotProp.set(dotProp.set(obj, 'foo.bar', 'b') , 'foo.baz', 'x');
+var obj2 = dotProp.setAll(obj, {'foo.bar': 'b', 'foo.baz': 'x'});
+//obj2 => {foo: {bar: 'b', baz: 'x'}}
+```
 
 ### delete
 

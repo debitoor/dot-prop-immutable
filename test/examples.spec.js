@@ -125,6 +125,21 @@ describe('examples.spec.js', function() {
 		});
 	});
 
+	describe('when setAll', function () {
+
+		it('Sets a map of elements', function () {
+			expect(dotProp.setAll({foo: 0, bar: {baz: 1}}, {foo: 2, 'bar.baz': 3})).to.eql(
+				{foo: 2, bar: {baz: 3}}
+			);
+		});
+
+		it('Sets a map of elements un existent', function () {
+			expect(dotProp.setAll({}, {foo: 2, 'bar.baz': 3})).to.eql(
+				{foo: 2, bar: {baz: 3}}
+			);
+		});
+	});
+
 	describe('when delete', function() {
 
 		it('Array element by index', function() {

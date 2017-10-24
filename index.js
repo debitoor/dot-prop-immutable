@@ -30,6 +30,17 @@ function set(obj, prop, value) {
 }
 
 /**
+ * Set many values defined in a map on the obj
+ * @param obj
+ * @param map
+ */
+function setAll(obj, map) {
+	return Object.keys(map).reduce(function (acc, path) {
+		return set(acc, path, map[path]);
+	}, obj);
+}
+
+/**
  * Get a value by a dot path.
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
@@ -163,6 +174,7 @@ function propToArray(prop) {
 
 module.exports = {
 	set: set,
+	setAll: setAll,
 	get: get,
 	delete: _delete,
 	toggle: toggle,
