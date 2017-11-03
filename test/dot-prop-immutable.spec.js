@@ -301,12 +301,18 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should get prop', () => {
 					expect(dotProp.get(obj, 'b')).to.eql({ x: 1, y: 2 });
 				});
+				it('should get prop default', () => {
+					expect(dotProp.get(obj, 'd', 'default')).to.eql('default');
+				});
 			});
 
 			describe('when get prop empty object', () => {
 
 				it('should get prop', () => {
 					expect(dotProp.get({}, 'b')).to.equal(undefined);
+				});
+				it('should get prop default', () => {
+					expect(dotProp.get({}, 'b', 'default')).to.equal('default');
 				});
 			});
 
@@ -315,6 +321,9 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should get prop', () => {
 					expect(dotProp.get(obj, '')).to.equal(undefined);
 				});
+				it('should get prop default', () => {
+					expect(dotProp.get(obj, '', 'default')).to.equal('default');
+				});
 			});
 
 			describe('when get deep prop', () => {
@@ -322,12 +331,18 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should get prop', () => {
 					expect(dotProp.get(obj, 'b.x')).to.equal(1);
 				});
+				it('should get prop default', () => {
+					expect(dotProp.get(obj, 'b.z', 'default')).to.equal('default');
+				});
 			});
 
 			describe('when get dotted prop', () => {
 
 				it('should get prop', () => {
 					expect(dotProp.get(obj, 'b\\.x')).to.equal(10);
+				});
+				it('should get prop default', () => {
+					expect(dotProp.get(obj, 'b\\.y', 'default')).to.equal('default');
 				});
 			});
 
@@ -347,12 +362,18 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should get index', () => {
 					expect(dotProp.get(obj, 'c.0')).to.equal(1);
 				});
+				it('should get index default', () => {
+					expect(dotProp.get(obj, 'c.2', 'default')).to.equal('default');
+				});
 			});
 
 			describe('when get array[index] prop not defined', () => {
 
 				it('should return undefined', () => {
 					expect(dotProp.get(obj, 'c.1.z.w')).to.equal(undefined);
+				});
+				it('should return default', () => {
+					expect(dotProp.get(obj, 'c.1.z.w', 'default')).to.equal('default');
 				});
 			});
 
@@ -375,6 +396,9 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should return undefined', () => {
 					expect(dotProp.get(obj, 'c.w')).to.equal(undefined);
 				});
+				it('should return default', () => {
+					expect(dotProp.get(obj, 'c.w', 'default')).to.equal('default');
+				});
 			});
 		});
 
@@ -385,12 +409,18 @@ describe('dot-prop-immutable.spec.js', function() {
 				it('should get index', () => {
 					expect(dotProp.get(arr, '0')).to.equal(1);
 				});
+				it('should return default when index not present', () => {
+					expect(dotProp.get(arr, '2', 'default')).to.equal('default');
+				});
 			});
 
 			describe('when get array[index] deep prop', () => {
 
 				it('should replace prop', () => {
 					expect(dotProp.get(arr, '1.a')).to.equal(false);
+				});
+				it('should return default when not present', () => {
+					expect(dotProp.get(arr, '1.b', 'default')).to.equal('default');
 				});
 			});
 
