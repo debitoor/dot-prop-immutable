@@ -59,6 +59,10 @@ function get(obj, prop, value) {
 		obj = obj[head];
 	}
 
+	if (typeof obj === 'undefined') {
+		return value;
+	}
+
 	return obj;
 }
 
