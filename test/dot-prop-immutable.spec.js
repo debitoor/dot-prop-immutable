@@ -316,6 +316,15 @@ describe('dot-prop-immutable.spec.js', function() {
 				});
 			});
 
+			describe('when get on a null', () => {
+				it('should get prop', () => {
+					expect(dotProp.get(null, 'b')).to.equal(undefined);
+				});
+				it('should get prop default', () => {
+					expect(dotProp.get(null, 'b', 'default')).to.equal('default');
+				});
+			});
+
 			describe('when get prop empty path', () => {
 
 				it('should get prop', () => {

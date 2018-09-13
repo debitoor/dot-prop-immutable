@@ -38,7 +38,7 @@ function get(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
-		if (typeof obj !== 'object') {
+		if (typeof obj !== 'object' || obj === null) {
 			return value;
 		}
 		var head = prop[i];
