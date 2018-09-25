@@ -70,8 +70,7 @@ function _delete(obj, prop) {
 		var clone, head = prop[i];
 
 		if (typeof obj !== 'object' ||
-			!Array.isArray(obj) && obj[head] === undefined) {
-
+			!Array.isArray(obj) && prop.length - 1 !== i && obj[head] === undefined) {
 			return obj;
 		}
 
