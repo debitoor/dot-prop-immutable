@@ -459,6 +459,17 @@ describe('dot-prop-immutable.spec.js', function() {
 				});
 			});
 
+			describe('when delete prop value of undefined', () => {
+
+				before(function () {
+					result = dotProp.delete({ a: undefined }, 'a');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({});
+				});
+			});
+
 			describe('when delete prop empty path', () => {
 
 				before(function () {
