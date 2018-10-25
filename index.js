@@ -154,7 +154,7 @@ function getArrayIndex(head, obj) {
 
 function propToArray(prop) {
 	return prop.split('.').reduce(function (ret, el, index, list) {
-		var last = index > 0 && ret[ret.length - 1]
+		var last = index > 0 && ret[ret.length - 1];
 		if (last && /(?:^|[^\\])\\$/.test(last)) {
 			ret.pop();
 			ret.push(last.slice(0, -1) + '.' + el);
