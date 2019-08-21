@@ -1,7 +1,0 @@
-{
-	"disallowEmptyBlocks": true,
-	"esnext": true,
-	"validateIndentation": "\t",
-	"extract": false,
-	"excludeFiles": ['node_modules']
-}

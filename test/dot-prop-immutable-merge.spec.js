@@ -1,7 +1,7 @@
-var dotProp = require('..');
+const dotProp = require('../lib');
 
-describe('dot-prop-immutable.merge.spec.js', function () {
-	
+describe('dot-prop-immutable.merge.spec.js', function() {
+
 	var obj = {
 		a: 1,
 		b: {
@@ -12,18 +12,18 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 		d: null,
 		'b.x': 10
 	};
-    
-	var arr = [1, {a: [1, 2]}];
+
+	var arr = [1, { a: [1, 2] }];
 
 	var result;
 	describe('when have an object', () => {
 
 		describe('merge an object value into object', () => {
 
-			before(function () {
-				result = dotProp.merge(obj, 'b', {z: 3});
+			before(function() {
+				result = dotProp.merge(obj, 'b', { z: 3 });
 			});
-		
+
 			it('should merge prop', () => {
 				expect(result).to.eql({
 					a: 1,
@@ -37,14 +37,14 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 					'b.x': 10
 				});
 			});
-			
+
 			it('invariant', objInvariant);
-        
+
 		});
 
 		describe('merge an array value into array', () => {
 
-			before(function () {
+			before(function() {
 				result = dotProp.merge(obj, 'c', [3, 4]);
 			});
 
@@ -67,8 +67,8 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 
 		describe('merge an object value into null', () => {
 
-			before(function () {
-				result = dotProp.merge(obj, 'd', {foo: 'bar'});
+			before(function() {
+				result = dotProp.merge(obj, 'd', { foo: 'bar' });
 			});
 
 			it('should merge prop', () => {
@@ -79,7 +79,7 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 						y: 2
 					},
 					c: [1, 2],
-					d: {foo: 'bar'},
+					d: { foo: 'bar' },
 					'b.x': 10
 				});
 			});
@@ -90,8 +90,8 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 
 		describe('merge an object value into undefined', () => {
 
-			before(function () {
-				result = dotProp.merge(obj, 'z', {foo: 'bar'});
+			before(function() {
+				result = dotProp.merge(obj, 'z', { foo: 'bar' });
 			});
 
 			it('should merge prop', () => {
@@ -103,7 +103,7 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 					},
 					c: [1, 2],
 					d: null,
-					z: {foo: 'bar'},
+					z: { foo: 'bar' },
 					'b.x': 10
 				});
 			});
@@ -111,8 +111,10 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 			it('invariant', objInvariant);
 
 		});
-		
-		
+
+		describe('when have an array', () => {
+			it('invariant', arrInvariant);
+		});
 	});
 
 	function objInvariant() {
@@ -130,7 +132,7 @@ describe('dot-prop-immutable.merge.spec.js', function () {
 
 	function arrInvariant() {
 		expect(arr).to.eql(
-			[1, {a: [1, 2]}]
+			[1, { a: [1, 2] }]
 		);
 	}
 });

@@ -1,22 +1,22 @@
-var dotProp = require('..');
+const dotProp = require('../lib');
 
-describe('dot-prop-immutable.toggle.spec.js', function () {
+describe('dot-prop-immutable.toggle.spec.js', () => {
 
-	var arr = [1, {a: false}];
+	var arr = [1, { a: false }];
 
 	var result;
 	describe('when have an array', () => {
 
 		describe('toggle a value', () => {
 
-			before(function () {
+			before(() => {
 				result = dotProp.toggle(arr, '1.a');
 			});
-			
+
 
 			it('should toggle prop', () => {
 				expect(result).to.eql(
-					[1, {a: true}]);
+					[1, { a: true }]);
 			});
 
 			it('invariant', arrInvariant);
@@ -25,7 +25,7 @@ describe('dot-prop-immutable.toggle.spec.js', function () {
 
 	function arrInvariant() {
 		expect(arr).to.eql(
-			[1, {a: false}]
+			[1, { a: false }]
 		);
 	}
 });

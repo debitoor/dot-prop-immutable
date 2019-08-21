@@ -1,8 +1,12 @@
-# dot-prop-immutable [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable) [![npm version](https://badge.fury.io/js/dot-prop-immutable.svg)](https://badge.fury.io/js/dot-prop-immutable)
+# dot-prop-immutable
+
+[![npm version](https://badge.fury.io/js/dot-prop-immutable.svg)](https://badge.fury.io/js/dot-prop-immutable) [![Build Status](https://travis-ci.org/debitoor/dot-prop-immutable.svg)](https://travis-ci.org/debitoor/dot-prop-immutable)
 
 Immutable version of dot-prop with some extensions.
 
-	npm install dot-prop-immutable
+```bash
+npm install dot-prop-immutable
+```
 
 The motivation for this module is to have a simple utility for changing state in a React-Redux application without mutating the existing state of plain JavaScript objects.
 If you are going for real immutable data collections take a look at the cool library [Immutable.js](https://github.com/facebook/immutable-js).
@@ -10,14 +14,13 @@ A good practice is not to mix the immutable data collections with mutable object
 
 This library implements 3 helper functions:
 
-```
+```bash
 get(object, path) --> value
 set(object, path, value) --> object
 delete(object, path) --> object
 ```
 
 None of the functions mutate the input object. For efficiency, the returned object is not a deep clone of the original, but a shallow copy of the objects in the mutated path.
-
 
 ## Usage
 
