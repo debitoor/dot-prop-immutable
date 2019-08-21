@@ -427,17 +427,17 @@ describe('dot-prop-immutable.spec.js', () => {
 		});
 	});
 
-	describe('when delete', () => {
+	describe('when remove', () => {
 
 		describe('when have an object', () => {
 
-			describe('when delete prop', () => {
+			describe('when remove prop', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'b');
+					result = dotProp.remove(obj, 'b');
 				});
 
-				it('should delete prop', () => {
+				it('should  prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						c: [1, 2],
@@ -448,33 +448,33 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete prop empty object', () => {
+			describe('when remove prop empty object', () => {
 
 				before(() => {
-					result = dotProp.delete({}, 'b');
+					result = dotProp.remove({}, 'b');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({});
 				});
 			});
 
-			describe('when delete prop empty path', () => {
+			describe('when remove prop empty path', () => {
 
 				before(() => {
-					result = dotProp.delete({}, '');
+					result = dotProp.remove({}, '');
 				});
 
-				it('should delete prop', () => { });
+				it('should remove prop', () => { });
 			});
 
-			describe('when delete deep prop', () => {
+			describe('when remove deep prop', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'b.x');
+					result = dotProp.remove(obj, 'b.x');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -488,13 +488,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete deep prop not defined', () => {
+			describe('when remove deep prop not defined', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'b.z.w');
+					result = dotProp.remove(obj, 'b.z.w');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -509,13 +509,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[index]', () => {
+			describe('when remove array[index]', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'c.0');
+					result = dotProp.remove(obj, 'c.0');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -530,13 +530,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[index] with function', () => {
+			describe('when remove array[index] with function', () => {
 
 				before(() => {
 					result = dotProp.set(obj, 'c.0', v => v * 3);
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -551,13 +551,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[index] prop not defined', () => {
+			describe('when remove array[index] prop not defined', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'c.1.z.w');
+					result = dotProp.remove(obj, 'c.1.z.w');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -572,13 +572,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[index] out of index', () => {
+			describe('when remove array[index] out of index', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'c.3');
+					result = dotProp.remove(obj, 'c.3');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -593,13 +593,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[$end]', () => {
+			describe('when remove array[$end]', () => {
 
 				before(() => {
-					result = dotProp.delete(obj, 'c.$end');
+					result = dotProp.remove(obj, 'c.$end');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						b: {
@@ -614,12 +614,12 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', objInvariant);
 			});
 
-			describe('when delete array[index] and index not integer', () => {
+			describe('when remove array[index] and index not integer', () => {
 				var error;
 
 				before(() => {
 					try {
-						dotProp.delete(obj, 'c.w');
+						dotProp.remove(obj, 'c.w');
 					} catch (err) {
 						error = err;
 					}
@@ -635,13 +635,13 @@ describe('dot-prop-immutable.spec.js', () => {
 
 		describe('when have an array', () => {
 
-			describe('when delete array[index]', () => {
+			describe('when remove array[index]', () => {
 
 				before(() => {
-					result = dotProp.delete(arr, '0');
+					result = dotProp.remove(arr, '0');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql(
 						[{ a: false }]
 					);
@@ -650,13 +650,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', arrInvariant);
 			});
 
-			describe('when delete array[index] deep prop', () => {
+			describe('when remove array[index] deep prop', () => {
 
 				before(() => {
-					result = dotProp.delete(arr, '1.a');
+					result = dotProp.remove(arr, '1.a');
 				});
 
-				it('should delete prop', () => {
+				it('should remove prop', () => {
 					expect(result).to.eql(
 						[1, {}]
 					);
@@ -665,13 +665,13 @@ describe('dot-prop-immutable.spec.js', () => {
 				it('invariant', arrInvariant);
 			});
 
-			describe('when delete array[index] which element is undefined', () => {
+			describe('when remove array[index] which element is undefined', () => {
 
 				before(() => {
-					result = dotProp.delete(arrWithUndefined, '1');
+					result = dotProp.remove(arrWithUndefined, '1');
 				});
 
-				it('should delete the element', () => {
+				it('should remove the element', () => {
 					expect(result).to.eql(
 						[1, 4]
 					);

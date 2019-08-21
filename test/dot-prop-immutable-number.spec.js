@@ -40,7 +40,7 @@ describe('dot-prop-immutable.number.spec.js', () => {
 		describe('when delete prop using number as path', () => {
 
 			before(() => {
-				result = dotProp.delete(arr, 1);
+				result = dotProp.remove(arr, 1);
 			});
 
 			it('should remove prop', () => {
