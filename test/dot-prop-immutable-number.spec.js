@@ -40,10 +40,10 @@ describe('dot-prop-immutable.number.spec.js', () => {
 		describe('when delete prop using number as path', () => {
 
 			before(() => {
-				result = dotProp.remove(arr, 1);
+				result = dotProp.delete(arr, 1);
 			});
 
-			it('should remove prop', () => {
+			it('should delete prop', () => {
 				expect(result).to.eql([
 					1
 				]);
