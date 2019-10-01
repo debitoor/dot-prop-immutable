@@ -1,4 +1,63 @@
-'use strict';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable radix */
+
+function getArrayIndex(theHead, obj) {
+	let head = theHead;
+	if (head === '$end') {
+		head = Math.max(obj.length - 1, 0);
+	}
+	if (!/^\+?\d+$/.test(head)) {
+		throw new Error(`Array index '${head}' has to be an integer`);
+	}
+	let newHead = parseInt(head);
+	if (newHead < 0) { newHead = 0; }
+	if (newHead > obj.length) { newHead = obj.length; }
+	return newHead;
+}
+
+function propToArray(prop) {
+	return prop.split('.').reduce((ret, el, index, list) => {
+		const last = index > 0 && list[index - 1];
+		if (last && /(?:^|[^\\])\\$/.test(last)) {
+			ret.pop();
+			ret.push(`${last.slice(0, -1)}.${el}`);
+		} else {
+			ret.push(el);
+		}
+		return ret;
+	}, []);
+}
+
+const setPropImmutableRec = (obj, prop, value, i) => {
+	let clone; let
+		head = prop[i];
+
+	if (prop.length > i) {
+		if (Array.isArray(obj)) {
+			head = getArrayIndex(head, obj);
+			clone = obj.slice();
+		} else {
+			clone = { ...obj };
+		}
+		if (obj[head] === undefined) {
+			if (isNaN(head)) {
+				clone[head] = setPropImmutableRec({}, prop, value, i + 1);
+			} else if (Array.isArray(clone)) {
+				clone.push(setPropImmutableRec({}, prop, value, i + 1));
+			} else {
+				clone = [setPropImmutableRec({}, prop, value, i + 1)];
+			}
+		} else {
+			clone[head] = setPropImmutableRec(obj[head], prop, value, i + 1);
+		}
+		return clone;
+	}
+
+	return typeof value === 'function' ? value(obj) : value;
+};
 
 /**
  * Set a value by a dot path.
@@ -6,25 +65,12 @@
  * @param prop The path to be set.
  * @param val The value to set.
  */
-function set(obj, prop, value) {
-	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
-
-	var setPropImmutableRec = function(obj, prop, value, i) {
-		var clone, head = prop[i];
-
-		if (prop.length > i) {
-			if (Array.isArray(obj)) {
-				head = getArrayIndex(head, obj);
-				clone = obj.slice();
-			} else {
-				clone = Object.assign({}, obj);
-			}
-			clone[head] = setPropImmutableRec(obj[head] !== undefined ? obj[head] : {}, prop, value, i + 1);
-			return clone;
-		}
-
-		return typeof value === 'function' ? value(obj) : value;
-	};
+function set(obj, property, value) {
+	const prop = typeof property === 'number'
+		? propToArray(property.toString())
+		: typeof property === 'string'
+			? propToArray(property)
+			: property;
 
 	return setPropImmutableRec(obj, prop, value, 0);
 }
@@ -34,14 +80,19 @@ function set(obj, prop, value) {
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
  */
-function get(obj, prop, value) {
-	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
+function get(theObj, property, value) {
+	let obj = theObj;
+	const prop = typeof property === 'number'
+		? propToArray(property.toString())
+		: typeof property === 'string'
+			? propToArray(property)
+			: property;
 
-	for (var i = 0; i < prop.length; i++) {
+	for (let i = 0; i < prop.length; i++) {
 		if (typeof obj !== 'object') {
 			return value;
 		}
-		var head = prop[i];
+		let head = prop[i];
 		if (Array.isArray(obj) && head === '$end') {
 			head = obj.length - 1;
 		}
@@ -63,40 +114,46 @@ function get(obj, prop, value) {
  * @param obj The object to evaluate.
  * @param prop The path to the property or index that should be deleted.
  */
-function _delete(obj, prop) {
-	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
-	var deletePropImmutableRec = function(obj, prop, i) {
-		var clone, head = prop[i];
 
-		if (typeof obj !== 'object' ||
-			!Array.isArray(obj) && obj[head] === undefined) {
+const deletePropImmutableRec = (obj, prop, i) => {
+	let clone; let
+		head = prop[i];
 
-			return obj;
-		}
+	if (typeof obj !== 'object'
+		|| (!Array.isArray(obj) && obj[head] === undefined)) {
+		return obj;
+	}
 
-		if (prop.length - 1 > i) {
-			if (Array.isArray(obj)) {
-				head = getArrayIndex(head, obj);
-				clone = obj.slice();
-			} else {
-				clone = Object.assign({}, obj);
-			}
-
-			clone[head] = deletePropImmutableRec(obj[head], prop, i + 1);
-			return clone;
-		}
-
+	if (prop.length - 1 > i) {
 		if (Array.isArray(obj)) {
 			head = getArrayIndex(head, obj);
-			clone = [].concat(obj.slice(0, head), obj.slice(head + 1));
+			clone = obj.slice();
 		} else {
-			clone = Object.assign({}, obj);
-			delete clone[head];
+			clone = { ...obj };
 		}
 
+		clone[head] = deletePropImmutableRec(obj[head], prop, i + 1);
 		return clone;
-	};
+	}
+
+	if (Array.isArray(obj)) {
+		head = getArrayIndex(head, obj);
+		clone = [].concat(obj.slice(0, head), obj.slice(head + 1));
+	} else {
+		clone = { ...obj };
+		delete clone[head];
+	}
+
+	return clone;
+};
+
+function _delete(obj, property) {
+	const prop = typeof property === 'number'
+		? propToArray(property.toString())
+		: typeof property === 'string'
+			? propToArray(property)
+			: property;
 
 	return deletePropImmutableRec(obj, prop, 0);
 }
@@ -109,8 +166,8 @@ function _delete(obj, prop) {
  * @param prop The path to the value.
  */
 function toggle(obj, prop) {
-	var curVal = get(obj, prop);
-	return set(obj, prop, !Boolean(curVal));
+	const curVal = get(obj, prop);
+	return set(obj, prop, !curVal);
 }
 
 /**
@@ -123,52 +180,27 @@ function toggle(obj, prop) {
  * @param val The value to merge into the target value.
  */
 function merge(obj, prop, val) {
-	var curVal = get(obj, prop);
+	const curVal = get(obj, prop);
 	if (typeof curVal === 'object') {
-		if (Array.isArray(curVal)){
+		if (Array.isArray(curVal)) {
 			return set(obj, prop, curVal.concat(val));
-		} else if (curVal === null){
+		} if (curVal === null) {
 			return set(obj, prop, val);
 		}
-		else {
-			var merged = Object.assign({}, curVal, val);
-			return set(obj, prop, merged);
-		}
-	} else if (typeof curVal === 'undefined'){
+
+		const merged = { ...curVal, ...val };
+		return set(obj, prop, merged);
+	} if (typeof curVal === 'undefined') {
 		return set(obj, prop, val);
 	}
-	else {
-		return obj;
-	}
-}
 
-function getArrayIndex(head, obj) {
-	if (head === '$end') {
-		head = Math.max(obj.length - 1, 0);
-	}
-	if (!/^\+?\d+$/.test(head)) {
-		throw new Error('Array index \'' + head + '\' has to be an integer');
-	}
-	return parseInt(head);
-}
-
-function propToArray(prop) {
-	return prop.split('.').reduce(function (ret, el, index, list) {
-		var last = index > 0 && list[index - 1];
-		if (last && /(?:^|[^\\])\\$/.test(last)) {
-			ret.pop();
-			ret.push(last.slice(0, -1) + '.' + el);
-		} else {
-			ret.push(el);
-		}
-		return ret;
-	}, []);
+	return obj;
 }
 
 module.exports = {
-	set: set,
-	get: get,
+	set,
+	get,
 	delete: _delete,
-	toggle: toggle,
-	merge: merge
+	toggle,
+	merge,
 };
