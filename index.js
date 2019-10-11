@@ -25,9 +25,14 @@ function propToArray(prop) {
 	}, []);
 }
 
+function isInt(str) {
+	const reg = /^\d+$/g;
+	return reg.test(str);
+}
+
 const setPropImmutableRec = (obj, prop, value, i) => {
-	let clone; let
-		head = prop[i];
+	let clone;
+	let head = prop[i];
 
 	if (prop.length > i) {
 		if (Array.isArray(obj)) {
@@ -37,15 +42,20 @@ const setPropImmutableRec = (obj, prop, value, i) => {
 			clone = Object.assign({}, obj);
 		}
 		if (obj[head] === undefined) {
-			if (!Number.isInteger(head)) {
-				clone[head] = setPropImmutableRec({}, prop, value, i + 1);
-			} else {
+			const blah = isInt(head);
+			if (blah) {
 				if (!Array.isArray(clone)) {
 					clone = [];
 				}
-				for (let x = clone.length - 1; x <= head; x += 1) {
-					clone.push((x === head ? setPropImmutableRec({}, prop, value, i + 1) : undefined));
+				if (clone.length > 0) {
+					for (let x = clone.length; x <= head; x += 1) {
+						clone.push((x === head ? setPropImmutableRec({}, prop, value, i + 1) : undefined));
+					}
+				} else {
+					clone.push(setPropImmutableRec({}, prop, value, i + 1));
 				}
+			} else {
+				clone[head] = setPropImmutableRec({}, prop, value, i + 1);
 			}
 		} else {
 			clone[head] = setPropImmutableRec(obj[head], prop, value, i + 1);
@@ -176,7 +186,7 @@ function del(obj, property) {
  * as "true" and "false" will toggle to false, but "0" will toggle to true.
  * Here is what Javascript considers false:
  * 0, -0, null, false, NaN, undefined, and the empty string ("")
- * @param obj The object to evaluate.s
+ * @param obj The object to evaluate.
  * @param prop The path to the value.
  */
 function toggle(obj, prop) {
