@@ -1,9 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable radix */
-
 function getArrayIndex(theHead, obj) {
 	let head = theHead;
 	if (head === '$end') {
@@ -12,7 +6,7 @@ function getArrayIndex(theHead, obj) {
 	if (!/^\+?\d+$/.test(head)) {
 		throw new Error(`Array index '${head}' has to be an integer`);
 	}
-	let newHead = parseInt(head);
+	let newHead = parseInt(head, 10);
 	if (newHead < 0) { newHead = 0; }
 	if (newHead > obj.length) { newHead = obj.length; }
 	return newHead;
@@ -43,12 +37,15 @@ const setPropImmutableRec = (obj, prop, value, i) => {
 			clone = { ...obj };
 		}
 		if (obj[head] === undefined) {
-			if (isNaN(head)) {
+			if (!Number.isInteger(head)) {
 				clone[head] = setPropImmutableRec({}, prop, value, i + 1);
-			} else if (Array.isArray(clone)) {
-				clone.push(setPropImmutableRec({}, prop, value, i + 1));
 			} else {
-				clone = [setPropImmutableRec({}, prop, value, i + 1)];
+				if (!Array.isArray(clone)) {
+					clone = [];
+				}
+				for (let x = clone.length - 1; x <= head; x += 1) {
+					clone.push((x === head ? setPropImmutableRec({}, prop, value, i + 1) : undefined));
+				}
 			}
 		} else {
 			clone[head] = setPropImmutableRec(obj[head], prop, value, i + 1);
@@ -66,11 +63,15 @@ const setPropImmutableRec = (obj, prop, value, i) => {
  * @param val The value to set.
  */
 function set(obj, property, value) {
-	const prop = typeof property === 'number'
-		? propToArray(property.toString())
-		: typeof property === 'string'
-			? propToArray(property)
-			: property;
+	let tempProp;
+	if (typeof property === 'number') {
+		tempProp = propToArray(property.toString());
+	} else if (typeof property === 'string') {
+		tempProp = propToArray(property);
+	} else {
+		tempProp = property;
+	}
+	const prop = tempProp;
 
 	return setPropImmutableRec(obj, prop, value, 0);
 }
@@ -82,13 +83,18 @@ function set(obj, property, value) {
  */
 function get(theObj, property, value) {
 	let obj = theObj;
-	const prop = typeof property === 'number'
-		? propToArray(property.toString())
-		: typeof property === 'string'
-			? propToArray(property)
-			: property;
+	let tempProp;
+	if (typeof property === 'number') {
+		tempProp = propToArray(property.toString());
+	} else if (typeof property === 'string') {
+		tempProp = propToArray(property);
+	} else {
+		tempProp = property;
+	}
+	const prop = tempProp;
 
-	for (let i = 0; i < prop.length; i++) {
+
+	for (let i = 0; i < prop.length; i += 1) {
 		if (typeof obj !== 'object') {
 			return value;
 		}
@@ -148,21 +154,29 @@ const deletePropImmutableRec = (obj, prop, i) => {
 	return clone;
 };
 
-function _delete(obj, property) {
-	const prop = typeof property === 'number'
-		? propToArray(property.toString())
-		: typeof property === 'string'
-			? propToArray(property)
-			: property;
+function del(obj, property) {
+	let tempProp;
+	if (typeof property === 'number') {
+		tempProp = propToArray(property.toString());
+	} else if (typeof property === 'string') {
+		tempProp = propToArray(property);
+	} else {
+		tempProp = property;
+	}
+	const prop = tempProp;
+
 
 	return deletePropImmutableRec(obj, prop, 0);
 }
 
 /**
- * Toggles a value.  The target value is evaluated using Boolean(currentValue).  The result will always be a JSON boolean.
- * Be careful with strings as target value, as "true" and "false" will toggle to false, but "0" will toggle to true.
- * Here is what Javascript considers false:  0, -0, null, false, NaN, undefined, and the empty string ("")
- * @param obj The object to evaluate.
+ * Toggles a value.  The target value is evaluated using Boolean(currentValue).
+ * The result will always be a JSON boolean.
+ * Be careful with strings as target value,
+ * as "true" and "false" will toggle to false, but "0" will toggle to true.
+ * Here is what Javascript considers false:
+ * 0, -0, null, false, NaN, undefined, and the empty string ("")
+ * @param obj The object to evaluate.s
  * @param prop The path to the value.
  */
 function toggle(obj, prop) {
@@ -200,7 +214,7 @@ function merge(obj, prop, val) {
 module.exports = {
 	set,
 	get,
-	delete: _delete,
+	delete: del,
 	toggle,
 	merge,
 };
