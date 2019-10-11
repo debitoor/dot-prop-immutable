@@ -34,7 +34,7 @@ const setPropImmutableRec = (obj, prop, value, i) => {
 			head = getArrayIndex(head, obj);
 			clone = obj.slice();
 		} else {
-			clone = { ...obj };
+			clone = Object.assign({}, obj);
 		}
 		if (obj[head] === undefined) {
 			if (!Number.isInteger(head)) {
@@ -136,7 +136,7 @@ const deletePropImmutableRec = (obj, prop, i) => {
 			head = getArrayIndex(head, obj);
 			clone = obj.slice();
 		} else {
-			clone = { ...obj };
+			clone = Object.assign({}, obj);
 		}
 
 		clone[head] = deletePropImmutableRec(obj[head], prop, i + 1);
@@ -147,7 +147,7 @@ const deletePropImmutableRec = (obj, prop, i) => {
 		head = getArrayIndex(head, obj);
 		clone = [].concat(obj.slice(0, head), obj.slice(head + 1));
 	} else {
-		clone = { ...obj };
+		clone = Object.assign({}, obj);
 		delete clone[head];
 	}
 
@@ -202,7 +202,7 @@ function merge(obj, prop, val) {
 			return set(obj, prop, val);
 		}
 
-		const merged = { ...curVal, ...val };
+		const merged = Object.assign({}, curVal, val);
 		return set(obj, prop, merged);
 	} if (typeof curVal === 'undefined') {
 		return set(obj, prop, val);
