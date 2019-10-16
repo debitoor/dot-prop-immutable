@@ -226,5 +226,5 @@ module.exports = {
 	get,
 	delete: del,
 	toggle,
-	merge,
+	merge
 };
