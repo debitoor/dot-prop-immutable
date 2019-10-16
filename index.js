@@ -8,7 +8,6 @@ function getArrayIndex(theHead, obj) {
 	}
 	let newHead = parseInt(head, 10);
 	if (newHead < 0) { newHead = 0; }
-	if (newHead > obj.length) { newHead = obj.length; }
 	return newHead;
 }
 
