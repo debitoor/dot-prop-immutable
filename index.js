@@ -36,7 +36,7 @@ const setPropImmutableRec = (obj, prop, value, i) => {
 
 	if (prop.length > i) {
 		if (Array.isArray(obj)) {
-			head = getArrayIndex(head, obj);
+			head = Number(head);
 			clone = obj.slice();
 		} else {
 			clone = Object.assign({}, obj);
