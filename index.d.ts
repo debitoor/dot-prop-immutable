@@ -1,9 +1,11 @@
-declare const dotProp: {
-	delete: (obj: any, prop: number | string) => any;
-	set: (obj: any, prop: number | string, value: any) => any;
-	get: (obj: any, prop: string | string[] | number, value?: any) => any;
-	toggle: (obj: any, prop: number | string) => any;
-	merge: (obj: any, prop: number | string, val: any) => any;
+interface DotPropImmutable {
+  get<I, T = any>(source: I, path: number | string | (string | number)[], defaultValue?: any): T;
+  set<I, T = any>(source: I, path: number | string | (string | number)[], value: any): T;
+  delete<I, T = any>(source: I, path: number | string | (string | number)[]): Partial<T>;
+  toggle<I, T = any>(source: I, path: number | string | (string | number)[]): T;
+  merge<I, T = any>(source: I, path: number | string | (string | number)[], value: any): T;
 }
 
-export = dotProp;
+declare const dotPropImmutable: DotPropImmutable;
+
+export = dotPropImmutable;

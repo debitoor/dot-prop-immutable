@@ -357,6 +357,14 @@ describe('dot-prop-immutable.spec.js', () => {
 				});
 			});
 
+			describe('when get intermediate deep prop is null', () => {
+
+				it('should return default value', () => {
+					expect(dotProp.get({b: {z: null}}, 'b.z.w')).to.equal(undefined);
+					expect(dotProp.get({b: {z: null}}, 'b.z.w', 'default')).to.equal('default');
+				});
+			});
+
 			describe('when get array[index]', () => {
 
 				it('should get index', () => {
@@ -507,6 +515,17 @@ describe('dot-prop-immutable.spec.js', () => {
 				});
 
 				it('invariant', objInvariant);
+			});
+
+			describe('when delete deep prop is null', () => {
+
+				before(function () {
+					result = dotProp.delete({b: {z: null}}, 'b.z.w');
+				});
+
+				it('should delete prop', () => {
+					expect(result).to.eql({b: {z: null}});
+				});
 			});
 
 			describe('when delete array[index]', () => {
