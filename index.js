@@ -33,13 +33,13 @@ function set(obj, prop, value) {
  * Get a value by a dot path.
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
- * @param [value] Default value
+ * @param [value] The default value that should be returned when the target doesn't exist.
  */
 function get(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
 
 	for (var i = 0; i < prop.length; i++) {
-		if (typeof obj !== 'object') {
+		if (obj === null || typeof obj !== 'object') {
 			return value;
 		}
 		var head = prop[i];
@@ -70,7 +70,7 @@ function _delete(obj, prop) {
 	var deletePropImmutableRec = function(obj, prop, i) {
 		var clone, head = prop[i];
 
-		if (typeof obj !== 'object' ||
+		if (obj === null || typeof obj !== 'object' ||
 			!Array.isArray(obj) && obj[head] === undefined) {
 
 			return obj;
