@@ -1,8 +1,8 @@
 const dotProp = require('../lib');
 
-describe('dot-prop-immutable.merge.spec.js', function() {
+describe('dot-prop-immutable.merge.spec.js', () => {
 
-	var obj = {
+	const obj = {
 		a: 1,
 		b: {
 			x: 1,
@@ -13,14 +13,14 @@ describe('dot-prop-immutable.merge.spec.js', function() {
 		'b.x': 10
 	};
 
-	var arr = [1, { a: [1, 2] }];
+	const arr = [1, { a: [1, 2] }];
 
-	var result;
+	let result;
 	describe('when have an object', () => {
 
 		describe('merge an object value into object', () => {
 
-			before(function() {
+			before(() => {
 				result = dotProp.merge(obj, 'b', { z: 3 });
 			});
 
@@ -44,7 +44,7 @@ describe('dot-prop-immutable.merge.spec.js', function() {
 
 		describe('merge an array value into array', () => {
 
-			before(function() {
+			before(() => {
 				result = dotProp.merge(obj, 'c', [3, 4]);
 			});
 
@@ -67,7 +67,7 @@ describe('dot-prop-immutable.merge.spec.js', function() {
 
 		describe('merge an object value into null', () => {
 
-			before(function() {
+			before(() => {
 				result = dotProp.merge(obj, 'd', { foo: 'bar' });
 			});
 
@@ -90,7 +90,7 @@ describe('dot-prop-immutable.merge.spec.js', function() {
 
 		describe('merge an object value into undefined', () => {
 
-			before(function() {
+			before(() => {
 				result = dotProp.merge(obj, 'z', { foo: 'bar' });
 			});
 

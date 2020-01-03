@@ -2,9 +2,9 @@ const dotProp = require('../lib');
 
 describe('dot-prop-immutable.number.spec.js', () => {
 
-	var arr = [1, { a: false }];
+	const arr = [1, { a: false }];
 
-	var result;
+	let result;
 	describe('when have an array', () => {
 
 		describe('when set prop using number as path', () => {

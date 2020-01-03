@@ -2,7 +2,7 @@ const dotProp = require('../lib');
 
 describe('dot-prop-immutable.spec.js', () => {
 
-	var obj = {
+	const obj = {
 		a: 1,
 		b: {
 			x: 1,
@@ -12,11 +12,11 @@ describe('dot-prop-immutable.spec.js', () => {
 		'b.x': 10
 	};
 
-	var arr = [1, { a: false }];
+	const arr = [1, { a: false }];
 
-	var arrWithUndefined = [1, undefined, 4];
+	const arrWithUndefined = [1, undefined, 4];
 
-	var result;
+	let result;
 
 	describe('when set', () => {
 
@@ -202,7 +202,7 @@ describe('dot-prop-immutable.spec.js', () => {
 				});
 
 				it('should replace prop', () => {
-					var c = [1, 2];
+					const c = [1, 2];
 					c[3] = 3;
 					expect(result).to.eql({
 						a: 1,
@@ -240,7 +240,7 @@ describe('dot-prop-immutable.spec.js', () => {
 			});
 
 			describe('when set array[index] and index not integer', () => {
-				var error;
+				let error;
 
 				before(() => {
 					try {
@@ -634,7 +634,7 @@ describe('dot-prop-immutable.spec.js', () => {
 			});
 
 			describe('when delete array[index] and index not integer', () => {
-				var error;
+				let error;
 
 				before(() => {
 					try {

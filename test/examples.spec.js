@@ -44,8 +44,8 @@ describe('examples.spec.js', () => {
 	});
 
 	describe('when set', () => {
-		var obj = { foo: { bar: 'a' } };
-		var obj1, obj2, obj3;
+		const obj = { foo: { bar: 'a' } };
+		let obj1, obj2, obj3;
 
 		describe('when prop', () => {
 
