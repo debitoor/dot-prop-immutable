@@ -25,8 +25,8 @@ None of the functions mutate the input object. For efficiency, the returned obje
 ## Usage
 
 ```javascript
-var dotProp = require('dot-prop-immutable');
-var state = { todos: [] }, index = 0;
+const dotProp = require('dot-prop-immutable');
+let state = { todos: [] }, index = 0;
 
 // Add todo:
 state = dotProp.set(state, 'todos', list => [...list, {text: 'cleanup', complete: false}])
@@ -85,7 +85,7 @@ dotProp.get({foo: {'dot.dot': 'unicorn'}}, ['foo', 'dot.dot'])
 It is also possible to index into an array where the special index `$end` refers to the last element of the array.
 
 ```javascript
-var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+const obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
 
 // Index into array
 dotProp.get(obj, 'foo.1')
@@ -111,12 +111,12 @@ Modify a nested property by a dot path
 
 ```javascript
 // Setter
-var obj = {foo: {bar: 'a'}};
+const obj = {foo: {bar: 'a'}};
 
-var obj1 = dotProp.set(obj, 'foo.bar', 'b');
+const obj1 = dotProp.set(obj, 'foo.bar', 'b');
 //obj1 => {foo: {bar: 'b'}}
 
-var obj2 = dotProp.set(obj1 , 'foo.baz', 'x');
+const obj2 = dotProp.set(obj1 , 'foo.baz', 'x');
 //obj2 => {foo: {bar: 'b', baz: 'x'}}
 ```
 
@@ -136,7 +136,7 @@ dotProp.set({foo: {bar: 'a'}}, 'foo.bar', v => v + 'bc')
 Modify a nested array
 
 ```javascript
-var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+const obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
 
 // Index into array
 dotProp.set(obj, 'foo.1', 'platin-unicorn')
@@ -157,7 +157,7 @@ dotProp.set(obj, 'foo.$end', 'platin-unicorn')
 Delete a nested property/array by a dot path
 
 ```javascript
-var obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
+const obj = {foo: [{ bar: 'gold-unicorn'}, 'white-unicorn', 'silver-unicorn']};
 
 // delete
 dotProp.delete(obj, 'foo.$end');
@@ -172,7 +172,7 @@ dotProp.delete(obj, 'foo.0.bar');
 Toggle a boolean a value by a dot path.
 
 ```javascript
-var obj = {foo: { bar: true } };
+const obj = {foo: { bar: true } };
 
 // toggle
 dotProp.toggle(obj, 'foo.bar');
@@ -188,7 +188,7 @@ Merge a value by a dot path.
  * If target is null or undefined, the value is simply set.
 
 ```javascript
-var obj = {foo: { bar: {a:1, b:2 } };
+const obj = {foo: { bar: {a:1, b:2 } };
 
 // merge object
 dotProp.merge(obj, 'foo.bar', {c:3} );
