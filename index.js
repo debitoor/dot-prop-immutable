@@ -4,7 +4,7 @@
  * Set a value by a dot path.
  * @param obj The object to evaluate.
  * @param prop The path to be set.
- * @param val The value to set.
+ * @param value The value to set.
  */
 function set(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
@@ -33,6 +33,7 @@ function set(obj, prop, value) {
  * Get a value by a dot path.
  * @param obj The object to evaluate.
  * @param prop The path to value that should be returned.
+ * @param [value] Default value
  */
 function get(obj, prop, value) {
 	prop = typeof prop === 'number' ? propToArray(prop.toString()) : typeof prop === 'string' ? propToArray(prop) : prop;
