@@ -3,6 +3,7 @@
   "version": "1.6.0",
   "description": "Immutable version of dot-prop with some extensions",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "postversion": "git push && git push --tags",
     "preversion": "npm test",
