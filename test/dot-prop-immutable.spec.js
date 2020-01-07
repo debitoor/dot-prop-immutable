@@ -1,8 +1,8 @@
-var dotProp = require('..');
+const dotProp = require('../lib');
 
-describe('dot-prop-immutable.spec.js', function() {
+describe('dot-prop-immutable.spec.js', () => {
 
-	var obj = {
+	const obj = {
 		a: 1,
 		b: {
 			x: 1,
@@ -12,19 +12,19 @@ describe('dot-prop-immutable.spec.js', function() {
 		'b.x': 10
 	};
 
-	var arr = [1, { a: false}];
+	const arr = [1, { a: false }];
 
-	var arrWithUndefined = [1, undefined, 4];
+	const arrWithUndefined = [1, undefined, 4];
 
-	var result;
+	let result;
 
-	describe('when set', function() {
+	describe('when set', () => {
 
 		describe('when have an object', () => {
 
 			describe('when set prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'b', 3);
 				});
 
@@ -42,7 +42,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set prop empty object', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set({}, 'b', 3);
 				});
 
@@ -55,7 +55,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set prop empty path', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set({}, '', 3);
 				});
 
@@ -68,7 +68,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set prop with function', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'a', v => v + 1);
 				});
 
@@ -89,7 +89,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set deep prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'b.x', 3);
 				});
 
@@ -110,7 +110,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set deep prop not defined', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'b.z.w', 3);
 				});
 
@@ -134,7 +134,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.0', 3);
 				});
 
@@ -155,7 +155,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index] with function', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.0', v => v * 3);
 				});
 
@@ -176,7 +176,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index] prop not defined', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.1.z.w', 3);
 				});
 
@@ -187,7 +187,7 @@ describe('dot-prop-immutable.spec.js', function() {
 							x: 1,
 							y: 2
 						},
-						c: [1, {z: {w: 3}}],
+						c: [1, { z: { w: 3 } }],
 						'b.x': 10
 					});
 				});
@@ -197,12 +197,12 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index] out of index', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.3', 3);
 				});
 
 				it('should replace prop', () => {
-					var c = [1, 2];
+					const c = [1, 2];
 					c[3] = 3;
 					expect(result).to.eql({
 						a: 1,
@@ -220,7 +220,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[$end]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.$end', 3);
 				});
 
@@ -240,9 +240,9 @@ describe('dot-prop-immutable.spec.js', function() {
 			});
 
 			describe('when set array[index] and index not integer', () => {
-				var error;
+				let error;
 
-				before(function () {
+				before(() => {
 					try {
 						dotProp.set(obj, 'c.w', 3);
 					} catch (err) {
@@ -262,13 +262,13 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(arr, '0', 3);
 				});
 
 				it('should replace prop', () => {
 					expect(result).to.eql(
-						[3, {a: false}]
+						[3, { a: false }]
 					);
 				});
 
@@ -277,13 +277,13 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when set array[index] deep prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(arr, '1.a', v => !v);
 				});
 
 				it('should replace prop', () => {
 					expect(result).to.eql(
-						[1, {a: true}]
+						[1, { a: true }]
 					);
 				});
 
@@ -292,7 +292,7 @@ describe('dot-prop-immutable.spec.js', function() {
 		});
 	});
 
-	describe('when get', function() {
+	describe('when get', () => {
 
 		describe('when have an object', () => {
 
@@ -360,8 +360,8 @@ describe('dot-prop-immutable.spec.js', function() {
 			describe('when get intermediate deep prop is null', () => {
 
 				it('should return default value', () => {
-					expect(dotProp.get({b: {z: null}}, 'b.z.w')).to.equal(undefined);
-					expect(dotProp.get({b: {z: null}}, 'b.z.w', 'default')).to.equal('default');
+					expect(dotProp.get({ b: { z: null } }, 'b.z.w')).to.equal(undefined);
+					expect(dotProp.get({ b: { z: null } }, 'b.z.w', 'default')).to.equal('default');
 				});
 			});
 
@@ -435,17 +435,17 @@ describe('dot-prop-immutable.spec.js', function() {
 		});
 	});
 
-	describe('when delete', function() {
+	describe('when delete', () => {
 
 		describe('when have an object', () => {
 
 			describe('when delete prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'b');
 				});
 
-				it('should delete prop', () => {
+				it('should  prop', () => {
 					expect(result).to.eql({
 						a: 1,
 						c: [1, 2],
@@ -458,7 +458,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete prop empty object', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete({}, 'b');
 				});
 
@@ -469,16 +469,16 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete prop empty path', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete({}, '');
 				});
 
-				it('should delete prop', () => {});
+				it('should delete prop', () => { });
 			});
 
 			describe('when delete deep prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'b.x');
 				});
 
@@ -498,7 +498,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete deep prop not defined', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'b.z.w');
 				});
 
@@ -519,18 +519,18 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete deep prop is null', () => {
 
-				before(function () {
-					result = dotProp.delete({b: {z: null}}, 'b.z.w');
+				before(() => {
+					result = dotProp.delete({ b: { z: null } }, 'b.z.w');
 				});
 
 				it('should delete prop', () => {
-					expect(result).to.eql({b: {z: null}});
+					expect(result).to.eql({ b: { z: null } });
 				});
 			});
 
 			describe('when delete array[index]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'c.0');
 				});
 
@@ -551,7 +551,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index] with function', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.set(obj, 'c.0', v => v * 3);
 				});
 
@@ -572,7 +572,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index] prop not defined', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'c.1.z.w');
 				});
 
@@ -593,7 +593,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index] out of index', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'c.3');
 				});
 
@@ -614,7 +614,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[$end]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(obj, 'c.$end');
 				});
 
@@ -634,9 +634,9 @@ describe('dot-prop-immutable.spec.js', function() {
 			});
 
 			describe('when delete array[index] and index not integer', () => {
-				var error;
+				let error;
 
-				before(function () {
+				before(() => {
 					try {
 						dotProp.delete(obj, 'c.w');
 					} catch (err) {
@@ -656,13 +656,13 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index]', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(arr, '0');
 				});
 
 				it('should delete prop', () => {
 					expect(result).to.eql(
-						[{a: false}]
+						[{ a: false }]
 					);
 				});
 
@@ -671,7 +671,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index] deep prop', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(arr, '1.a');
 				});
 
@@ -686,14 +686,14 @@ describe('dot-prop-immutable.spec.js', function() {
 
 			describe('when delete array[index] which element is undefined', () => {
 
-				before(function () {
+				before(() => {
 					result = dotProp.delete(arrWithUndefined, '1');
 				});
 
 				it('should delete the element', () => {
 					expect(result).to.eql(
-            [1, 4]
-          );
+						[1, 4]
+					);
 				});
 			});
 		});
@@ -713,7 +713,7 @@ describe('dot-prop-immutable.spec.js', function() {
 
 	function arrInvariant() {
 		expect(arr).to.eql(
-			[1, {a: false}]
+			[1, { a: false }]
 		);
 	}
 });

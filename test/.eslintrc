@@ -1,10 +1,9 @@
 {
-	"rules": {
-		"no-unused-expressions": 0,
-		"no-unused-vars": 0,
-		"no-trailing-spaces": 0
+	"extends": "../.eslintrc",
+	"env": {
+		"mocha": true
 	},
 	"globals": {
-    	"expect": true
+		"expect": true
 	}
 }

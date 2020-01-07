@@ -1,4 +1,4 @@
---require ./test/common.js
+--require ./test/globals.js
 --reporter spec
 --ui bdd
 --recursive
