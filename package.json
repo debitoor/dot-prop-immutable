@@ -1,6 +1,6 @@
 {
   "name": "dot-prop-immutable",
-  "version": "1.6.1",
+  "version": "2.0.0",
   "description": "Immutable version of dot-prop with some extensions",
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -42,6 +42,6 @@
     "mocha-eslint": "5.0.0"
   },
   "engines": {
-      "node": ">=6.0.0"
+    "node": ">=6.0.0"
   }
 }
