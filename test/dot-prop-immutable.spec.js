@@ -12,6 +12,21 @@ describe('dot-prop-immutable.spec.js', () => {
 		'b.x': 10
 	};
 
+	const deeplyNestedObj = {
+		flavour: {
+			spicy: {
+				pepper: {
+					bell: 'mild',
+					habanero: 'strong'
+				}
+			},
+			'dotty.dot.flavours': {
+				dalmatian: 'stracciatella'
+			}
+		},
+		'www.example.com': 'domain'
+	};
+
 	const arr = [1, { a: false }];
 
 	const arrWithUndefined = [1, undefined, 4];
@@ -343,6 +358,15 @@ describe('dot-prop-immutable.spec.js', () => {
 				});
 				it('should get prop default', () => {
 					expect(dotProp.get(obj, 'b\\.y', 'default')).to.equal('default');
+				});
+				it('should get deeply nested key', () => {
+					expect(dotProp.get(deeplyNestedObj, 'flavour.spicy.pepper.bell', 'default')).to.equal('mild');
+				});
+				it('should get deeply nested key with multiple dots in selector', () => {
+					expect(dotProp.get(deeplyNestedObj, 'flavour.dotty\\.dot\\.flavours.dalmatian', 'default')).to.equal('stracciatella');
+				});
+				it('should get key with multiple dots in selector', () => {
+					expect(dotProp.get(deeplyNestedObj, 'www\\.example\\.com', 'default')).to.equal('domain');
 				});
 			});
 
