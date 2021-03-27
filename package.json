@@ -1,8 +1,9 @@
 {
   "name": "dot-prop-immutable",
-  "version": "1.4.0",
+  "version": "2.1.0",
   "description": "Immutable version of dot-prop with some extensions",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
   "scripts": {
     "postversion": "git push && git push --tags",
     "preversion": "npm test",
@@ -12,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/debitoor/dot-prop-immutable"
   },
-  "author": "debitoor",
+  "author": "Debitoor",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/debitoor/dot-prop-immutable/issues"
@@ -34,11 +35,13 @@
   ],
   "homepage": "https://github.com/debitoor/dot-prop-immutable",
   "devDependencies": {
-    "chai": "^2.2.0",
-    "eslint-plugin-react": "^3.5.1",
-    "jscs": "2.2.1",
-    "mocha": "^2.1.1",
-    "mocha-eslint": "^0.1.7",
-    "mocha-jscs": "^3.0.0"
+    "@debitoor/eslint-config-debitoor": "3.0.2",
+    "chai": "4.2.0",
+    "eslint": "6.8.0",
+    "mocha": "6.2.0",
+    "mocha-eslint": "5.0.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }
