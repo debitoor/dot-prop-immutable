@@ -129,21 +129,21 @@ describe('examples.spec.js', () => {
 		});
 	});
 
-	describe('when setMany', function () {
+	describe('when setMany', function() {
 
-		it('Sets a map of elements', function () {
-			expect(dotProp.setMany({foo: 0, bar: {baz: 1}}, {foo: 2, 'bar.baz': 3})).to.eql(
-				{foo: 2, bar: {baz: 3}}
+		it('Sets a map of elements', function() {
+			expect(dotProp.setMany({ foo: 0, bar: { baz: 1 } }, { foo: 2, 'bar.baz': 3 })).to.eql(
+				{ foo: 2, bar: { baz: 3 } }
 			);
 		});
 
-		it('Sets a map of elements un existent', function () {
-			expect(dotProp.setMany({}, {foo: 2, 'bar.baz': 3})).to.eql(
-				{foo: 2, bar: {baz: 3}}
+		it('Sets a map of elements un existent', function() {
+			expect(dotProp.setMany({}, { foo: 2, 'bar.baz': 3 })).to.eql(
+				{ foo: 2, bar: { baz: 3 } }
 			);
 		});
 	});
-	
+
 	describe('when delete', () => {
 
 		it('Array element by index', () => {
