@@ -1,6 +1,6 @@
-const dotProp = require('../lib');
+const dotProp = require('../../lib');
 
-describe('dot-prop-immutable-setMany.spec.js', () => {
+describe('setMany.spec.js', () => {
 	describe('when an object', () => {
 
 	});

@@ -8,7 +8,7 @@ interface DotPropImmutable {
   merge<I, T = any>(source: I, path: Path, value: any): T;
   getMany<I, T = any>(): T;
   setMany<I, T = any>(source, paths: Path[]): T;
-  deleteMany<I, T = any>(): T;
+  deleteMany<I, T = any>(source: I, paths: Path[]): T;
   toggleMany<I, T = any>(): T;
 }
 
