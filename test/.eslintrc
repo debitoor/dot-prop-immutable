@@ -4,6 +4,8 @@
 		"mocha": true
 	},
 	"globals": {
-		"expect": true
+		"expect": true,
+		"baseObj": true,
+		"baseArr": true
 	}
 }
